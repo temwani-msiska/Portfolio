@@ -4,14 +4,16 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import profilePic from "../public/Profile-Port.jpg";
 import logo from "../public/White_Logo_Transparent.png";
+import { motion } from "framer-motion";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12 flex flex-col items-center">
-      {/* Navigation - Clean version */}
-      <header className="w-full max-w-6xl flex justify-between items-center ">
+    <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12 flex flex-col items-center scroll-smooth">
+      
+      {/* Navigation */}
+      <header className="w-full max-w-6xl sticky top-0 z-50 flex justify-between items-center bg-transparent py-6 backdrop-blur-md ">
         {/* Logo */}
-        <div className="w-50 h-50 relative">
+        <div className="w-40 h-40 relative">
           <Image
             src={logo}
             alt="Temwani Logo"
@@ -31,9 +33,15 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-between gap-12 py-12">
-        {/* Text Column */}
-        <div className="flex-1 basis-1/2 text-left">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">Hello, I’m Temwani 👋🏿</h1>
+        
+        {/* Text Column - Animated */}
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="flex-1 basis-1/2 text-left"
+        >
+          <h1 className="text-3xl md:text-5xl font-bold mb-4">Hello, I’m Temwa 👋🏿</h1>
 
           <p className="text-base md:text-lg mb-4 leading-relaxed md:leading-loose text-white">
             I’m a full stack developer building clean, scalable applications
@@ -59,11 +67,16 @@ export default function Home() {
               LinkedIn
             </Button>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Profile Image */}
-        <div className="flex-1 basis-1/2 flex justify-center">
-          <div className="relative w-80 md:w-[28rem] lg:w-[32rem] aspect-square rounded-full border-4 border-white overflow-hidden shadow-2xl transition-transform duration-500 rotate-[15deg] hover:rotate-0 before:content-[''] before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-tr before:from-yellow-300 before:to-yellow-500 before:blur-2xl before:opacity-40">
+        {/* Profile Image - Animated */}
+        <motion.div
+          initial={{ opacity: 0, rotate: 5, scale: 0.8 }}
+          animate={{ opacity: 1, rotate: 15, scale: 1 }}
+          transition={{ duration: 1 }}
+          className="flex-1 basis-1/2 flex justify-center"
+        >
+          <div className="relative w-80 md:w-[28rem] lg:w-[32rem] aspect-square rounded-full border-4 border-white overflow-hidden shadow-2xl transition-transform duration-500 hover:rotate-0 before:content-[''] before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-tr before:from-yellow-300 before:to-yellow-500 before:blur-2xl before:opacity-40">
             <Image
               src={profilePic}
               alt="Temwani Profile Picture"
@@ -73,7 +86,7 @@ export default function Home() {
               priority
             />
           </div>
-        </div>
+        </motion.div>
       </section>
     </main>
   );
