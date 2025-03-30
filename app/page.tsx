@@ -1,19 +1,21 @@
-'use client';
+"use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import profilePic from "../public/Profile-Port.jpg";
 import logo from "../public/White_Logo_Transparent.png";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12 flex flex-col items-center scroll-smooth">
-      
-      {/* Navigation */}
-      <header className="w-full max-w-6xl sticky top-0 z-50 flex justify-between items-center bg-transparent py-6 backdrop-blur-md ">
+    <main className="h-screen overflow-hidden flex flex-col text-white px-4 sm:px-6 md:px-12 pt-2 sm:pt-4 bg-gradient-to-tl from-[#db8805] to-yellow-500">
+      {/* Header */}
+      <header className="w-full max-w-7xl mx-auto sticky top-0 z-50 flex justify-between items-center bg-transparent py-2 sm:py-3">
         {/* Logo */}
-        <div className="w-40 h-40 relative">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 relative">
           <Image
             src={logo}
             alt="Temwani Logo"
@@ -23,60 +25,145 @@ export default function Home() {
           />
         </div>
 
-        {/* Nav Links */}
-        <nav className="space-x-8 text-sm md:text-base font-semibold text-white tracking-wide">
-          <a href="#about" className="hover:text-yellow-100 hover:underline underline-offset-4 transition">About</a>
-          <a href="#projects" className="hover:text-yellow-100 hover:underline underline-offset-4 transition">Projects</a>
-          <a href="#contact" className="hover:text-yellow-100 hover:underline underline-offset-4 transition">Contact</a>
+        {/* Desktop Nav Links */}
+        <nav className="hidden sm:flex space-x-6 md:space-x-8 text-sm md:text-base font-semibold tracking-wide">
+          {["About", "Projects", "Contact"].map((text) => (
+            <a
+              key={text}
+              href={`#${text.toLowerCase()}`}
+              className="hover:text-yellow-300 hover:underline underline-offset-4 transition duration-200 ease-in-out"
+            >
+              {text}
+            </a>
+          ))}
         </nav>
+
+        {/* Hamburger Menu */}
+        <div className="sm:hidden">
+          <button
+            className="focus:outline-none"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle Menu"
+          >
+            <svg
+              className="w-8 h-8"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              {menuOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
+        </div>
       </header>
 
+      {/* Mobile Nav Menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.nav
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="sm:hidden w-full max-w-7xl mx-auto px-4 pt-2 pb-4 text-center font-semibold text-base space-y-4"
+          >
+            {["About", "Projects", "Contact"].map((text) => (
+              <a
+                key={text}
+                href={`#${text.toLowerCase()}`}
+                className="block hover:text-yellow-300 hover:underline underline-offset-4"
+                onClick={() => setMenuOpen(false)}
+              >
+                {text}
+              </a>
+            ))}
+          </motion.nav>
+        )}
+      </AnimatePresence>
+
       {/* Hero Section */}
-      <section className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-between gap-12 py-12">
-        
-        {/* Text Column - Animated */}
+      <section className="flex-grow w-full max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between gap-8 py-4 sm:py-6">
+        {/* Text Column */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="flex-1 basis-1/2 text-left"
+          className="flex-1 text-center lg:text-left"
         >
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">Hello, I’m Temwa 👋🏿</h1>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+            Hello, I’m Temwa 👋🏿
+          </h1>
 
-          <p className="text-base md:text-lg mb-4 leading-relaxed md:leading-loose text-white">
+          <p className="text-base sm:text-lg md:text-xl mb-4 leading-relaxed text-white">
             I’m a full stack developer building clean, scalable applications
-            with React, Next.js, Django & Node. Based in Zambia — available remotely.
+            with React, Next.js, Django & Node. Based in Zambia — available
+            remotely.
           </p>
 
           <p className="text-sm italic mb-6 text-yellow-100">
             Currently open for freelance or remote full-time roles.
           </p>
 
-          {/* Contact Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button variant="outline" className="border-white text-white hover:bg-white hover:text-yellow-700 w-full sm:w-auto"
-              onClick={() => (window.location.href = 'mailto:temwani.msiska@gmail.com')} aria-label="Send Email">
+          <div className="flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-4">
+            <Button
+              variant="outline"
+              className="border-white text-white hover:bg-yellow-300 hover:text-gray-900 transition-colors"
+              onClick={() =>
+                (window.location.href = "mailto:temwani.msiska@gmail.com")
+              }
+            >
               Email
             </Button>
-            <Button variant="outline" className="border-white text-white hover:bg-white hover:text-yellow-700 w-full sm:w-auto"
-              onClick={() => window.open('https://github.com/temwani-msiska/', '_blank')} aria-label="Visit GitHub">
+            <Button
+              variant="outline"
+              className="border-white text-white hover:bg-yellow-300 hover:text-gray-900 transition-colors"
+              onClick={() =>
+                window.open("https://github.com/temwani-msiska/", "_blank")
+              }
+            >
               GitHub
             </Button>
-            <Button variant="outline" className="border-white text-white hover:bg-white hover:text-yellow-700 w-full sm:w-auto"
-              onClick={() => window.open('https://www.linkedin.com/in/temwani-msiska-3640a827b/', '_blank')} aria-label="Visit LinkedIn">
+            <Button
+              variant="outline"
+              className="border-white text-white hover:bg-yellow-300 hover:text-gray-900 transition-colors"
+              onClick={() =>
+                window.open(
+                  "https://www.linkedin.com/in/temwani-msiska-3640a827b/",
+                  "_blank"
+                )
+              }
+            >
               LinkedIn
             </Button>
           </div>
         </motion.div>
 
-        {/* Profile Image - Animated */}
+        {/* Profile Image */}
         <motion.div
-          initial={{ opacity: 0, rotate: 5, scale: 0.8 }}
-          animate={{ opacity: 1, rotate: 15, scale: 1 }}
-          transition={{ duration: 1 }}
-          className="flex-1 basis-1/2 flex justify-center"
+          animate={{ rotate: [15, 12, 15] }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "circInOut",
+          }}
+          className="flex-1 flex justify-center"
         >
-          <div className="relative w-80 md:w-[28rem] lg:w-[32rem] aspect-square rounded-full border-4 border-white overflow-hidden shadow-2xl transition-transform duration-500 hover:rotate-0 before:content-[''] before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-tr before:from-yellow-300 before:to-yellow-500 before:blur-2xl before:opacity-40">
+          <div className="relative w-60 sm:w-72 md:w-80 lg:w-[25rem] aspect-square rounded-full border-4 border-white overflow-hidden shadow-2xl transition-transform duration-500 hover:rotate-0 before:content-[''] before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-tr before:from-yellow-300 before:to-yellow-500 before:blur-2xl before:opacity-40">
             <Image
               src={profilePic}
               alt="Temwani Profile Picture"
