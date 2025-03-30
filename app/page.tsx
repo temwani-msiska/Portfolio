@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"; // ShadCN button
 import profilePic from "../public/Profile-Port.jpg";
 import logo from "../public/Logo_Final.png";
 import { motion, AnimatePresence } from "framer-motion";
@@ -105,7 +105,7 @@ export default function Home() {
           className="flex-1 text-center lg:text-left"
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-            Hello, I’m Temwa 👋🏿
+            Hi, I’m Temwa👋🏿
           </h1>
 
           <p className="text-base sm:text-lg md:text-xl mb-4 leading-relaxed text-white">
@@ -121,7 +121,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-4">
             <Button
               variant="outline"
-              className="border-white text-white hover:!bg-yellow-300 hover:!text-gray-900 hover:scale-105 transition-transform transition-colors"
+              className="border-white text-white hover:bg-white hover:text-yellow-700 transition-colors duration-300"
               onClick={() =>
                 (window.location.href = "mailto:temwani.msiska@gmail.com")
               }
@@ -130,7 +130,7 @@ export default function Home() {
             </Button>
             <Button
               variant="outline"
-              className="border-white text-white hover:!bg-yellow-300 hover:!text-gray-900 hover:scale-105 transition-transform transition-colors"
+              className="border-white text-white hover:bg-white hover:text-yellow-700 transition-colors duration-300"
               onClick={() =>
                 window.open("https://github.com/temwani-msiska/", "_blank")
               }
@@ -139,7 +139,7 @@ export default function Home() {
             </Button>
             <Button
               variant="outline"
-              className="border-white text-white hover:!bg-yellow-300 hover:!text-gray-900 hover:scale-105 transition-transform transition-colors"
+              className="border-white text-white hover:bg-white hover:text-yellow-700 transition-colors duration-300"
               onClick={() =>
                 window.open(
                   "https://www.linkedin.com/in/temwani-msiska-3640a827b/",
