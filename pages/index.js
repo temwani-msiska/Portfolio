@@ -12,7 +12,7 @@ export default function Home() {
         <div className="flex justify-center gap-4">
           <a
             href="mailto:temwani.msiska@gmail.com.com"
-            className="bg-white text-blue-700 px-5 py-2 rounded-full font-semibold hover:bg-gray-100 transition"
+            className="bg-white text-yellow-400 px-5 py-2 rounded-full font-semibold hover:bg-gray-100 transition"
           >
             Email Me
           </a>
