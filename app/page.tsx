@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
 import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import profilePic from "../public/Profile-Port.jpg";
-import logo from "../public/White_Logo_Transparent.png";
+import logo from "../public/Logo_Final.png";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Home() {
@@ -15,7 +15,7 @@ export default function Home() {
       {/* Header */}
       <header className="w-full max-w-7xl mx-auto sticky top-0 z-50 flex justify-between items-center bg-transparent py-2 sm:py-3">
         {/* Logo */}
-        <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 relative">
+        <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 relative">
           <Image
             src={logo}
             alt="Temwani Logo"
@@ -121,7 +121,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-4">
             <Button
               variant="outline"
-              className="border-white text-white hover:bg-yellow-300 hover:text-gray-900 transition-colors"
+              className="border-white text-white hover:!bg-yellow-300 hover:!text-gray-900 hover:scale-105 transition-transform transition-colors"
               onClick={() =>
                 (window.location.href = "mailto:temwani.msiska@gmail.com")
               }
@@ -130,7 +130,7 @@ export default function Home() {
             </Button>
             <Button
               variant="outline"
-              className="border-white text-white hover:bg-yellow-300 hover:text-gray-900 transition-colors"
+              className="border-white text-white hover:!bg-yellow-300 hover:!text-gray-900 hover:scale-105 transition-transform transition-colors"
               onClick={() =>
                 window.open("https://github.com/temwani-msiska/", "_blank")
               }
@@ -139,7 +139,7 @@ export default function Home() {
             </Button>
             <Button
               variant="outline"
-              className="border-white text-white hover:bg-yellow-300 hover:text-gray-900 transition-colors"
+              className="border-white text-white hover:!bg-yellow-300 hover:!text-gray-900 hover:scale-105 transition-transform transition-colors"
               onClick={() =>
                 window.open(
                   "https://www.linkedin.com/in/temwani-msiska-3640a827b/",
