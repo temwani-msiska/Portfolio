@@ -27,7 +27,7 @@ export default function Home() {
 
         {/* Desktop Nav Links */}
         <nav className="hidden sm:flex space-x-6 md:space-x-8 text-sm md:text-base font-semibold tracking-wide">
-          {["About", "Projects", "Contact"].map((text) => (
+          {["About", "Projects", "Blog","Contact"].map((text) => (
             <a
               key={text}
               href={`#${text.toLowerCase()}`}
@@ -81,7 +81,7 @@ export default function Home() {
             transition={{ duration: 0.2 }}
             className="sm:hidden w-full max-w-7xl mx-auto px-4 pt-2 pb-4 text-center font-semibold text-base space-y-4"
           >
-            {["About", "Projects", "Contact"].map((text) => (
+            {["About", "Projects","Blog", "Contact"].map((text) => (
               <a
                 key={text}
                 href={`#${text.toLowerCase()}`}
@@ -163,7 +163,7 @@ export default function Home() {
           }}
           className="flex-1 flex justify-center"
         >
-          <div className="relative w-60 sm:w-72 md:w-80 lg:w-[25rem] aspect-square rounded-full border-4 border-white overflow-hidden shadow-2xl transition-transform duration-500 hover:rotate-0 before:content-[''] before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-tr before:from-yellow-300 before:to-yellow-500 before:blur-2xl before:opacity-40">
+          <div className="relative w-60 sm:w-72 md:w-80 lg:w-[24rem] aspect-square rounded-full border-4 border-white overflow-hidden shadow-2xl transition-transform duration-500 hover:rotate-0 before:content-[''] before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-tr before:from-yellow-300 before:to-yellow-500 before:blur-2xl before:opacity-40">
             <Image
               src={profilePic}
               alt="Temwani Profile Picture"
