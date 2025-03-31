@@ -38,12 +38,18 @@ export async function generateStaticParams() {
   return Object.keys(posts).map((slug) => ({ slug }));
 }
 
+// ✅ DON'T call marked() here — call it above in a helper
+const getPost = (slug: string) => {
+  const post = posts[slug];
+  if (!post) return null;
+  const htmlContent = marked.parse(post.content); // ✅ Compile markdown here
+  return { ...post, htmlContent };
+};
+
 export default function Page({ params }: { params: { slug: string } }) {
-  const post = posts[params.slug];
+  const post = getPost(params.slug);
 
   if (!post) return notFound();
-
-  const htmlContent = marked(post.content);
 
   return (
     <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12">
@@ -53,7 +59,7 @@ export default function Page({ params }: { params: { slug: string } }) {
         <p className="text-yellow-200 text-sm">{post.date}</p>
         <div
           className="prose prose-invert mt-6"
-          dangerouslySetInnerHTML={{ __html: htmlContent }}
+          dangerouslySetInnerHTML={{ __html: post.htmlContent }}
         />
       </div>
     </main>
