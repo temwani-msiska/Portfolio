@@ -78,7 +78,7 @@ export default function ContactPage() {
       <Header />
       <div className="max-w-2xl mx-auto space-y-10">
         <div className="text-center">
-          <h1 className="text-4xl font-bold">Let's Talk</h1>
+        <h1 className="text-4xl font-bold">Let&apos;s Talk</h1>
           <p className="text-white/80 text-lg mt-2">
             Want to build something together? Reach out using the form below.
           </p>
