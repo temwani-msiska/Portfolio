@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { marked } from "marked";
 import Header from "@/components/Header";
 
+// Your posts data, keyed by slug
 const posts: Record<string, { title: string; date: string; content: string }> = {
   "nextjs-portfolio": {
     title: "How I Built My Portfolio with Next.js 14",
@@ -34,18 +35,18 @@ Django's power lies in backend logic, APIs, and admin tools.
   },
 };
 
+// 1) A named export to provide Next.js with static paths
 export async function generateStaticParams() {
   return Object.keys(posts).map((slug) => ({ slug }));
 }
 
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
-
-// The key change: making this an async function.
-export default async function Page({ params }: PageProps) {
+// 2) The page component MUST be async
+// 3) We define the param type inline to avoid conflicts with Next's internal type.
+export default async function Page({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const post = posts[params.slug];
 
   if (!post) return notFound();
