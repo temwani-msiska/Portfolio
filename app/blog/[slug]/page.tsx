@@ -1,19 +1,13 @@
 'use client';
 
 import { notFound } from "next/navigation";
-import { marked } from "marked"; 
+import { marked } from "marked";
 import Header from "@/components/Header";
 
-type PageProps = {
-  params: {
-    slug: string;
-  };
-};
-
 const posts: Record<string, { title: string; date: string; content: string }> = {
-  "nextjs-portfolio": {
-    title: "How I Built My Portfolio with Next.js 14",
-    date: "March 2025",
+  'nextjs-portfolio': {
+    title: 'How I Built My Portfolio with Next.js 14',
+    date: 'March 2025',
     content: `
 ## Stack Breakdown
 
@@ -27,9 +21,9 @@ const posts: Record<string, { title: string; date: string; content: string }> = 
 Clean structure, fast builds, and fun to write with!
     `,
   },
-  "react-vs-django": {
-    title: "React vs. Django: Best Practices",
-    date: "February 2025",
+  'react-vs-django': {
+    title: 'React vs. Django: Best Practices',
+    date: 'February 2025',
     content: `
 ## When to Use React
 
@@ -42,12 +36,16 @@ Django's power lies in backend logic, APIs, and admin tools.
   },
 };
 
-export default function BlogPost({ params }: PageProps) {
+export default function BlogPost({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const post = posts[params.slug];
 
   if (!post) return notFound();
 
-  const htmlContent = marked(post.content); // ✅ Convert Markdown to HTML
+  const htmlContent = marked(post.content);
 
   return (
     <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12">
