@@ -2,17 +2,18 @@ import { notFound } from "next/navigation";
 import { marked } from "marked";
 import Header from "@/components/Header";
 
+
 export async function generateStaticParams() {
   return [
-    { slug: 'nextjs-portfolio' },
-    { slug: 'react-vs-django' },
+    { slug: "nextjs-portfolio" },
+    { slug: "react-vs-django" },
   ];
 }
 
 const posts: Record<string, { title: string; date: string; content: string }> = {
-  'nextjs-portfolio': {
-    title: 'How I Built My Portfolio with Next.js 14',
-    date: 'March 2025',
+  "nextjs-portfolio": {
+    title: "How I Built My Portfolio with Next.js 14",
+    date: "March 2025",
     content: `
 ## Stack Breakdown
 
@@ -26,9 +27,9 @@ const posts: Record<string, { title: string; date: string; content: string }> = 
 Clean structure, fast builds, and fun to write with!
     `,
   },
-  'react-vs-django': {
-    title: 'React vs. Django: Best Practices',
-    date: 'February 2025',
+  "react-vs-django": {
+    title: "React vs. Django: Best Practices",
+    date: "February 2025",
     content: `
 ## When to Use React
 
@@ -40,6 +41,7 @@ Django's power lies in backend logic, APIs, and admin tools.
     `,
   },
 };
+
 
 export default function Page({ params }: { params: { slug: string } }) {
   const post = posts[params.slug];
