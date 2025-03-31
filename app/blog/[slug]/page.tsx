@@ -2,15 +2,10 @@ import { notFound } from "next/navigation";
 import { marked } from "marked";
 import Header from "@/components/Header";
 
-
-export async function generateStaticParams() {
-  return [
-    { slug: "nextjs-portfolio" },
-    { slug: "react-vs-django" },
-  ];
-}
-
-const posts: Record<string, { title: string; date: string; content: string }> = {
+const posts: Record<
+  string,
+  { title: string; date: string; content: string }
+> = {
   "nextjs-portfolio": {
     title: "How I Built My Portfolio with Next.js 14",
     date: "March 2025",
@@ -42,8 +37,17 @@ Django's power lies in backend logic, APIs, and admin tools.
   },
 };
 
+export async function generateStaticParams() {
+  return Object.keys(posts).map((slug) => ({ slug }));
+}
 
-export default function Page({ params }: { params: { slug: string } }) {
+interface PageProps {
+  params: {
+    slug: string;
+  };
+}
+
+export default function Page({ params }: PageProps) {
   const post = posts[params.slug];
 
   if (!post) return notFound();
