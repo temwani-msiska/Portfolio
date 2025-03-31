@@ -1,65 +1,42 @@
-import { notFound } from "next/navigation";
-import { marked } from "marked";
-import Header from "@/components/Header";
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import { marked } from 'marked';
+import Header from '@/components/Header';
+import { notFound } from 'next/navigation';
 
-const posts: Record<string, { title: string; date: string; content: string }> = {
-  'nextjs-portfolio': {
-    title: 'How I Built My Portfolio with Next.js 14',
-    date: 'March 2025',
-    content: `
-## Stack Breakdown
-
-- Next.js 14 App Router
-- Tailwind CSS
-- TypeScript
-- Vercel for deployment
-
-## Key Takeaways
-
-Clean structure, fast builds, and fun to write with!
-    `,
-  },
-  'react-vs-django': {
-    title: 'React vs. Django: Best Practices',
-    date: 'February 2025',
-    content: `
-## When to Use React
-
-React excels at dynamic UIs and client-side interactivity...
-
-## When to Use Django
-
-Django's power lies in backend logic, APIs, and admin tools.
-    `,
-  },
+type Params = {
+  params: {
+    slug: string;
+  };
 };
 
 export async function generateStaticParams() {
-  return Object.keys(posts).map((slug) => ({ slug }));
+  const files = fs.readdirSync(path.join(process.cwd(), 'content/blog'));
+  return files.map((file) => ({
+    slug: file.replace('.md', ''),
+  }));
 }
 
-// ✅ DON'T call marked() here — call it above in a helper
-const getPost = (slug: string) => {
-  const post = posts[slug];
-  if (!post) return null;
-  const htmlContent = marked.parse(post.content); // ✅ Compile markdown here
-  return { ...post, htmlContent };
-};
+export default async function Page({ params }: Params) {
+  const filePath = path.join(process.cwd(), 'content/blog', `${params.slug}.md`);
 
-export default function Page({ params }: { params: { slug: string } }) {
-  const post = getPost(params.slug);
+  if (!fs.existsSync(filePath)) return notFound();
 
-  if (!post) return notFound();
+  const fileContent = fs.readFileSync(filePath, 'utf-8');
+  const { data, content } = matter(fileContent);
+
+  const html = marked(content);
 
   return (
     <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12">
       <Header />
       <div className="max-w-3xl mx-auto space-y-6">
-        <h1 className="text-4xl font-bold">{post.title}</h1>
-        <p className="text-yellow-200 text-sm">{post.date}</p>
+        <h1 className="text-4xl font-bold">{data.title}</h1>
+        <p className="text-yellow-200 text-sm">{data.date}</p>
         <div
           className="prose prose-invert mt-6"
-          dangerouslySetInnerHTML={{ __html: post.htmlContent }}
+          dangerouslySetInnerHTML={{ __html: html }}
         />
       </div>
     </main>
