@@ -2,14 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { marked } from 'marked';
-import Header from '@/components/Header';
 import { notFound } from 'next/navigation';
-
-type Params = {
-  params: {
-    slug: string;
-  };
-};
+import Header from '@/components/Header';
 
 export async function generateStaticParams() {
   const files = fs.readdirSync(path.join(process.cwd(), 'content/blog'));
@@ -18,15 +12,17 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function Page({ params }: Params) {
+// ✅ Only inline param type – no external interface
+export default async function Page({ params }: { params: { slug: string } }) {
   const filePath = path.join(process.cwd(), 'content/blog', `${params.slug}.md`);
 
-  if (!fs.existsSync(filePath)) return notFound();
+  if (!fs.existsSync(filePath)) {
+    return notFound();
+  }
 
   const fileContent = fs.readFileSync(filePath, 'utf-8');
   const { data, content } = matter(fileContent);
-
-  const html = marked(content);
+  const html = marked.parse(content);
 
   return (
     <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12">
