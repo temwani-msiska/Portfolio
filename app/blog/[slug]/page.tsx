@@ -1,8 +1,13 @@
-'use client';
-
 import { notFound } from "next/navigation";
 import { marked } from "marked";
 import Header from "@/components/Header";
+
+export async function generateStaticParams() {
+  return [
+    { slug: 'nextjs-portfolio' },
+    { slug: 'react-vs-django' },
+  ];
+}
 
 const posts: Record<string, { title: string; date: string; content: string }> = {
   'nextjs-portfolio': {
@@ -36,11 +41,7 @@ Django's power lies in backend logic, APIs, and admin tools.
   },
 };
 
-export default function BlogPost({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default function Page({ params }: { params: { slug: string } }) {
   const post = posts[params.slug];
 
   if (!post) return notFound();
