@@ -21,8 +21,6 @@ export default function AboutPage() {
           content="Temwani Msiska, full stack developer, React, Next.js, Django, Node, Zambia developer, remote developer"
         />
         <meta name="author" content="Temwani Msiska" />
-
-        {/* Open Graph / Facebook */}
         <meta
           property="og:title"
           content="Temwani Msiska | Full Stack Developer"
@@ -34,8 +32,6 @@ export default function AboutPage() {
         <meta property="og:image" content="/Profile-Port.jpg" />
         <meta property="og:url" content="https://temwanimsiska.dev" />
         <meta property="og:type" content="website" />
-
-        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"

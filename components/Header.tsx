@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { useState } from 'react';
-import logo from '../public/Logo_Final.png';
-import { AnimatePresence, motion } from 'framer-motion';
+import Image from "next/image";
+import { useState } from "react";
+import logo from "../public/Logo_Final.png";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const navItems = ['About', 'Projects', 'Blog', 'Contact'];
+  const navItems = ["About", "Projects", "Blog", "Contact"];
 
   return (
     <>
@@ -19,9 +19,9 @@ export default function Header() {
           animate={{ scale: [1, 1.04, 1], rotate: [0, 1.5, 0] }}
           transition={{
             repeat: Infinity,
-            repeatType: 'mirror',
+            repeatType: "mirror",
             duration: 2,
-            ease: 'easeInOut',
+            ease: "easeInOut",
           }}
           className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full"
         >

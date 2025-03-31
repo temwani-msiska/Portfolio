@@ -1,5 +1,5 @@
 ---
-title: "How I Built My Portfolio with Next.js 14"
+title: "React vs Django"
 date: "2025-03-01"
 ---
 

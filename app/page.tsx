@@ -31,8 +31,6 @@ export default function Home() {
           content="Temwani Msiska, full stack developer, React, Next.js, Django, Node, Zambia developer, remote developer"
         />
         <meta name="author" content="Temwani Msiska" />
-
-        {/* Open Graph / Facebook */}
         <meta
           property="og:title"
           content="Temwani Msiska | Full Stack Developer"
@@ -44,8 +42,6 @@ export default function Home() {
         <meta property="og:image" content="/Profile-Port.jpg" />
         <meta property="og:url" content="https://temwanimsiska.dev" />
         <meta property="og:type" content="website" />
-
-        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
@@ -93,7 +89,6 @@ export default function Home() {
       </Head>
 
       <main className="min-h-screen flex flex-col text-white px-4 sm:px-6 md:px-12 pt-2 sm:pt-4 bg-gradient-to-tl from-[#db8805] to-yellow-500">
-        {/* Header */}
         <Header />
         {/* Mobile Nav Menu */}
         <AnimatePresence>

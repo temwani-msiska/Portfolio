@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Head from "next/head";
 import Header from "@/components/Header";
@@ -35,7 +35,10 @@ export default function BlogPage() {
           content="Temwani Msiska, full stack developer, React, Next.js, Django, Node, Zambia developer, remote developer"
         />
         <meta name="author" content="Temwani Msiska" />
-        <meta property="og:title" content="Temwani Msiska | Full Stack Developer" />
+        <meta
+          property="og:title"
+          content="Temwani Msiska | Full Stack Developer"
+        />
         <meta
           property="og:description"
           content="Building clean, scalable applications with React, Next.js, Django & Node."
@@ -44,11 +47,23 @@ export default function BlogPage() {
         <meta property="og:url" content="https://temwanimsiska.dev" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Temwani Msiska | Full Stack Developer" />
-        <meta name="twitter:description" content="Experienced full stack developer based in Zambia — available for freelance or remote roles." />
+        <meta
+          name="twitter:title"
+          content="Temwani Msiska | Full Stack Developer"
+        />
+        <meta
+          name="twitter:description"
+          content="Experienced full stack developer based in Zambia — available for freelance or remote roles."
+        />
         <meta name="twitter:image" content="/Profile-Port.jpg" />
-        <meta property="og:see_also" content="https://github.com/temwani-msiska" />
-        <meta property="og:see_also" content="https://www.linkedin.com/in/temwani-msiska-3640a827b/" />
+        <meta
+          property="og:see_also"
+          content="https://github.com/temwani-msiska"
+        />
+        <meta
+          property="og:see_also"
+          content="https://www.linkedin.com/in/temwani-msiska-3640a827b/"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

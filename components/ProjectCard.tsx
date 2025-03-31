@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import Image from 'next/image';
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 type ProjectCardProps = {
   title: string;
@@ -10,10 +10,15 @@ type ProjectCardProps = {
   link?: string;
 };
 
-export default function ProjectCard({ title, description, image, link }: ProjectCardProps) {
+export default function ProjectCard({
+  title,
+  description,
+  image,
+  link,
+}: ProjectCardProps) {
   return (
     <motion.a
-      href={link || '#'}
+      href={link || "#"}
       whileHover={{ y: -8 }}
       transition={{ duration: 0.3 }}
       className="group flex flex-col max-w-[500px] w-full mx-auto rounded-xl overflow-hidden shadow-xl border border-white/10 bg-white/5 backdrop-blur-lg hover:border-yellow-500 transition "

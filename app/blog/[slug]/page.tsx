@@ -1,34 +1,31 @@
-
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { marked } from 'marked';
-import { notFound } from 'next/navigation';
-import Header from '@/components/Header';
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import { marked } from "marked";
+import { notFound } from "next/navigation";
+import Header from "@/components/Header";
 
 export async function generateStaticParams() {
-  const files = fs.readdirSync(path.join(process.cwd(), 'content/blog'));
+  const files = fs.readdirSync(path.join(process.cwd(), "content/blog"));
   return files.map((file) => ({
-    slug: file.replace('.md', ''),
+    slug: file.replace(".md", ""),
   }));
 }
-
 
 export default async function BlogPost({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-
   const { slug } = await params;
 
-  const filePath = path.join(process.cwd(), 'content/blog', `${slug}.md`);
+  const filePath = path.join(process.cwd(), "content/blog", `${slug}.md`);
 
   if (!fs.existsSync(filePath)) {
     return notFound();
   }
 
-  const fileContent = fs.readFileSync(filePath, 'utf-8');
+  const fileContent = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(fileContent);
   const html = marked.parse(content);
 
