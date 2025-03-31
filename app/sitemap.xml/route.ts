@@ -1,28 +1,28 @@
-import { MetadataRoute } from "next";
+import { type MetadataRoute } from "next";
+
+export const dynamic = "force-static"; 
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://temwanimsiska.dev";
-
   return [
     {
-      url: baseUrl,
-      lastModified: new Date(),
+      url: "https://temwanimsiska.dev",
+      lastModified: new Date().toISOString(),
     },
     {
-      url: `${baseUrl}/#about`,
-      lastModified: new Date(),
+      url: "https://temwanimsiska.dev/#about",
+      lastModified: new Date().toISOString(),
     },
     {
-      url: `${baseUrl}/#projects`,
-      lastModified: new Date(),
+      url: "https://temwanimsiska.dev/#projects",
+      lastModified: new Date().toISOString(),
     },
     {
-      url: `${baseUrl}/#blog`,
-      lastModified: new Date(),
+      url: "https://temwanimsiska.dev/#blog",
+      lastModified: new Date().toISOString(),
     },
     {
-      url: `${baseUrl}/#contact`,
-      lastModified: new Date(),
+      url: "https://temwanimsiska.dev/#contact",
+      lastModified: new Date().toISOString(),
     },
   ];
 }
