@@ -94,7 +94,7 @@ export default function Home() {
 
       <main className="min-h-screen flex flex-col text-white px-4 sm:px-6 md:px-12 pt-2 sm:pt-4 bg-gradient-to-tl from-[#db8805] to-yellow-500">
         {/* Header */}
-       <Header />
+        <Header />
         {/* Mobile Nav Menu */}
         <AnimatePresence>
           {menuOpen && (
