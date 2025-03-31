@@ -1,24 +1,53 @@
-'use client';
+"use client";
 
 import Image from "next/image";
 import { useState } from "react";
-import { Button } from "@/components/ui/button"; // ShadCN button
+import { Button } from "@/components/ui/button";
 import profilePic from "../public/Profile-Port.jpg";
 import logo from "../public/Logo_Final.png";
-import { motion, AnimatePresence } from "framer-motion";
+import Head from "next/head";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { scrollY } = useScroll();
+  const yOffset = useTransform(scrollY, [0, 300], [0, 60]);
 
   return (
-    <main className="h-screen overflow-hidden flex flex-col text-white px-4 sm:px-6 md:px-12 pt-2 sm:pt-4 bg-gradient-to-tl from-[#db8805] to-yellow-500">
+    <>
+    <Head>
+  <title>Temwani Msiska | Full Stack Developer from Zambia</title>
+  <meta name="description" content="Temwani Msiska is a full stack developer specializing in React, Next.js, Django & Node. Based in Zambia and open to remote work." />
+  <meta name="keywords" content="Temwani Msiska, full stack developer, React, Next.js, Django, Node, Zambia developer, remote developer" />
+  <meta name="author" content="Temwani Msiska" />
+
+  {/* Open Graph / Facebook */}
+  <meta property="og:title" content="Temwani Msiska | Full Stack Developer" />
+  <meta property="og:description" content="Building clean, scalable applications with React, Next.js, Django & Node." />
+  <meta property="og:image" content="/Profile-Port.jpg" />
+  <meta property="og:url" content="https://temwanimsiska.dev" />
+  <meta property="og:type" content="website" />
+
+  {/* Twitter */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Temwani Msiska | Full Stack Developer" />
+  <meta name="twitter:description" content="Experienced full stack developer based in Zambia — available for freelance or remote roles." />
+  <meta name="twitter:image" content="/Profile-Port.jpg" />
+</Head>
+
+    <main className="min-h-screen overflow-x-hidden flex flex-col text-white px-4 sm:px-6 md:px-12 pt-2 sm:pt-4 bg-gradient-to-tl from-[#db8805] to-yellow-500">
       {/* Header */}
       <header className="w-full max-w-7xl mx-auto sticky top-0 z-50 flex justify-between items-center bg-transparent py-2 sm:py-3">
         {/* Logo */}
         <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 relative">
           <Image
             src={logo}
-            alt="Temwani Logo"
+            alt="Temwani Msiska Logo"
             fill
             className="object-contain"
             priority
@@ -27,7 +56,7 @@ export default function Home() {
 
         {/* Desktop Nav Links */}
         <nav className="hidden sm:flex space-x-6 md:space-x-8 text-sm md:text-base font-semibold tracking-wide">
-          {["About", "Projects", "Blog","Contact"].map((text) => (
+          {["About", "Projects", "Blog", "Contact"].map((text) => (
             <a
               key={text}
               href={`#${text.toLowerCase()}`}
@@ -81,7 +110,7 @@ export default function Home() {
             transition={{ duration: 0.2 }}
             className="sm:hidden w-full max-w-7xl mx-auto px-4 pt-2 pb-4 text-center font-semibold text-base space-y-4"
           >
-            {["About", "Projects","Blog", "Contact"].map((text) => (
+            {["About", "Projects", "Blog", "Contact"].map((text) => (
               <a
                 key={text}
                 href={`#${text.toLowerCase()}`}
@@ -104,17 +133,17 @@ export default function Home() {
           transition={{ duration: 0.8 }}
           className="flex-1 text-center lg:text-left"
         >
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 font-serif">
             Hi, I’m Temwa👋🏿
           </h1>
 
-          <p className="text-base sm:text-lg md:text-xl mb-4 leading-relaxed text-white">
+          <p className="text-base sm:text-lg md:text-xl mb-4 leading-relaxed text-white font-serif">
             I’m a full stack developer building clean, scalable applications
             with React, Next.js, Django & Node. Based in Zambia — available
             remotely.
           </p>
 
-          <p className="text-sm italic mb-6 text-yellow-100">
+          <p className="text-sm italic mb-6 text-yellow-100 font-serif">
             Currently open for freelance or remote full-time roles.
           </p>
 
@@ -154,15 +183,16 @@ export default function Home() {
 
         {/* Profile Image */}
         <motion.div
-          animate={{ rotate: [15, 12, 15] }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "circInOut",
-          }}
-          className="flex-1 flex justify-center"
-        >
+          style={{ y: yOffset }}
+  animate={{ rotate: [15, 12, 15] }}
+  transition={{
+    duration: 3,
+    repeat: Infinity,
+    repeatType: "reverse",
+    ease: "circInOut",
+  }}
+  className="flex-1 flex justify-center"
+>
           <div className="relative w-60 sm:w-72 md:w-80 lg:w-[24rem] aspect-square rounded-full border-4 border-white overflow-hidden shadow-2xl transition-transform duration-500 hover:rotate-0 before:content-[''] before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-tr before:from-yellow-300 before:to-yellow-500 before:blur-2xl before:opacity-40">
             <Image
               src={profilePic}
@@ -175,6 +205,8 @@ export default function Home() {
           </div>
         </motion.div>
       </section>
+     
     </main>
+    </>
   );
 }
