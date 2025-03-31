@@ -1,16 +1,10 @@
-// app/blog/[slug]/page.tsx
+
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { marked } from 'marked';
 import { notFound } from 'next/navigation';
 import Header from '@/components/Header';
-
-
-type BlogPostProps = {
-  params: { slug: string };
-};
-
 
 export async function generateStaticParams() {
   const files = fs.readdirSync(path.join(process.cwd(), 'content/blog'));
@@ -19,8 +13,16 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function BlogPost({ params }: BlogPostProps) {
-  const filePath = path.join(process.cwd(), 'content/blog', `${params.slug}.md`);
+
+export default async function BlogPost({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+
+  const { slug } = await params;
+
+  const filePath = path.join(process.cwd(), 'content/blog', `${slug}.md`);
 
   if (!fs.existsSync(filePath)) {
     return notFound();
