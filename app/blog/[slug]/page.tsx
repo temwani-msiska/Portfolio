@@ -2,10 +2,7 @@ import { notFound } from "next/navigation";
 import { marked } from "marked";
 import Header from "@/components/Header";
 
-const posts: Record<
-  string,
-  { title: string; date: string; content: string }
-> = {
+const posts: Record<string, { title: string; date: string; content: string }> = {
   "nextjs-portfolio": {
     title: "How I Built My Portfolio with Next.js 14",
     date: "March 2025",
@@ -47,7 +44,8 @@ interface PageProps {
   };
 }
 
-export default function Page({ params }: PageProps) {
+// The key change: making this an async function.
+export default async function Page({ params }: PageProps) {
   const post = posts[params.slug];
 
   if (!post) return notFound();
