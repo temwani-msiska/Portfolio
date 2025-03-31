@@ -1,5 +1,13 @@
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
+import { Metadata } from "next";
+
+type PageProps = {
+  params: {
+    slug: string;
+  };
+};
+
 const posts: Record<string, { title: string; date: string; content: string }> =
   {
     "nextjs-portfolio": {
@@ -33,14 +41,14 @@ const posts: Record<string, { title: string; date: string; content: string }> =
     },
   };
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
+export default function BlogPost({ params }: PageProps) {
   const post = posts[params.slug];
 
   if (!post) return notFound();
 
   return (
     <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12">
-     <Header />
+      <Header />
       <div className="max-w-3xl mx-auto space-y-6">
         <h1 className="text-4xl font-bold">{post.title}</h1>
         <p className="text-yellow-200 text-sm">{post.date}</p>
