@@ -38,7 +38,6 @@ export async function generateStaticParams() {
   return Object.keys(posts).map((slug) => ({ slug }));
 }
 
-// ✅ This line is the key fix
 export default function Page({ params }: { params: { slug: string } }) {
   const post = posts[params.slug];
 
