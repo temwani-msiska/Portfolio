@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
-import { Metadata } from "next";
 
 type PageProps = {
   params: {
