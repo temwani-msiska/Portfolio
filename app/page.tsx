@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import profilePic from "../public/Profile-Port.jpg";
 import logo from "../public/Logo_Final.png";
 import Head from "next/head";
+import Header from "@/components/Header";
 import {
   motion,
   AnimatePresence,
@@ -94,75 +95,7 @@ export default function Home() {
 
       <main className="min-h-screen flex flex-col text-white px-4 sm:px-6 md:px-12 pt-2 sm:pt-4 bg-gradient-to-tl from-[#db8805] to-yellow-500">
         {/* Header */}
-        <header className="w-full max-w-7xl mx-auto sticky top-0 z-50 flex justify-between items-center bg-transparent py-2 sm:py-3">
-          {/* Logo */}
-          <motion.a
-            href="/"
-            initial={{ scale: 1 }}
-            animate={{ scale: [1, 1.04, 1], rotate: [0, 1.5, 0] }}
-            transition={{
-              repeat: Infinity,
-              repeatType: "mirror",
-              duration: 2,
-              ease: "easeInOut",
-            }}
-            className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full "
-          >
-            <Image
-              src={logo}
-              alt="Temwani Msiska Logo"
-              fill
-              className="object-contain"
-              priority
-            />
-          </motion.a>
-
-          {/* Desktop Nav Links */}
-          <nav className="hidden sm:flex space-x-6 md:space-x-8 text-sm md:text-base font-semibold tracking-wide">
-            {["About", "Projects", "Blog", "Contact"].map((text) => (
-              <a
-                key={text}
-                href={`/${text.toLowerCase()}`}
-                className="hover:text-yellow-300 hover:underline underline-offset-4 transition duration-200 ease-in-out"
-              >
-                {text}
-              </a>
-            ))}
-          </nav>
-
-          {/* Hamburger Menu */}
-          <div className="sm:hidden">
-            <button
-              className="focus:outline-none"
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle Menu"
-            >
-              <svg
-                className="w-8 h-8"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                {menuOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
-            </button>
-          </div>
-        </header>
-
+       <Header />
         {/* Mobile Nav Menu */}
         <AnimatePresence>
           {menuOpen && (
