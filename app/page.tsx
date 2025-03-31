@@ -38,6 +38,27 @@ export default function Home() {
   <meta name="twitter:title" content="Temwani Msiska | Full Stack Developer" />
   <meta name="twitter:description" content="Experienced full stack developer based in Zambia — available for freelance or remote roles." />
   <meta name="twitter:image" content="/Profile-Port.jpg" />
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: "Temwani Msiska",
+        url: "https://temwanimsiska.dev",
+        image: "https://temwanimsiska.dev/Profile-Port.jpg",
+        jobTitle: "Full Stack Developer",
+        worksFor: {
+          "@type": "Organization",
+          name: "SMART Zambia ",
+        },
+        sameAs: [
+          "https://github.com/temwani-msiska/",
+          "https://www.linkedin.com/in/temwani-msiska-3640a827b/",
+        ],
+      }),
+    }}
+  />
 </Head>
 
     <main className="min-h-screen overflow-x-hidden flex flex-col text-white px-4 sm:px-6 md:px-12 pt-2 sm:pt-4 bg-gradient-to-tl from-[#db8805] to-yellow-500">

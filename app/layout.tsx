@@ -68,7 +68,7 @@ export const metadata: Metadata = {
   },
 };
 
-// ✅ The Root Layout Component
+
 export default function RootLayout({
   children,
 }: {
