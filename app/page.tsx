@@ -56,6 +56,14 @@ export default function Home() {
           content="Experienced full stack developer based in Zambia — available for freelance or remote roles."
         />
         <meta name="twitter:image" content="/Profile-Port.jpg" />
+        <meta
+            property="og:see_also"
+            content="https://github.com/temwani-msiska"
+          />
+          <meta
+            property="og:see_also"
+            content="https://www.linkedin.com/in/temwani-msiska-3640a827b/"
+          />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -81,7 +89,9 @@ export default function Home() {
               ],
             }),
           }}
+          
         />
+        
       </Head>
 
       <main className="min-h-screen overflow-x-hidden flex flex-col text-white px-4 sm:px-6 md:px-12 pt-2 sm:pt-4 bg-gradient-to-tl from-[#db8805] to-yellow-500">
@@ -142,6 +152,7 @@ export default function Home() {
               </svg>
             </button>
           </div>
+        
         </header>
 
         {/* Mobile Nav Menu */}
