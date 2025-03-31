@@ -12,8 +12,8 @@ export async function generateStaticParams() {
   }));
 }
 
-// ✅ Only inline param type – no external interface
-export default async function Page({ params }: { params: { slug: string } }) {
+// ✅ DO NOT NAME THIS FUNCTION 'Page'
+export default async function BlogPost({ params }: { params: { slug: string } }) {
   const filePath = path.join(process.cwd(), 'content/blog', `${params.slug}.md`);
 
   if (!fs.existsSync(filePath)) {
