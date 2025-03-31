@@ -123,7 +123,7 @@ export default function Home() {
             {["About", "Projects", "Blog", "Contact"].map((text) => (
               <a
                 key={text}
-                href={`#${text.toLowerCase()}`}
+                href={`/${text.toLowerCase()}`}
                 className="hover:text-yellow-300 hover:underline underline-offset-4 transition duration-200 ease-in-out"
               >
                 {text}
@@ -177,7 +177,7 @@ export default function Home() {
               {["About", "Projects", "Blog", "Contact"].map((text) => (
                 <a
                   key={text}
-                  href={`#${text.toLowerCase()}`}
+                  href={`/${text.toLowerCase()}`}
                   className="block hover:text-yellow-300 hover:underline underline-offset-4"
                   onClick={() => setMenuOpen(false)}
                 >
@@ -200,26 +200,10 @@ export default function Home() {
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 font-serif leading-snug">
               Hi, I’m <span className="text-yellow-300">Temwani</span> 👋🏿
             </h1>
-            <p className="text-base sm:text-lg md:text-xl mb-4 leading-relaxed font-serif text-[--color-foreground] dark:text-[--color-foreground]">
-              I’m a{" "}
-              <span className="font-bold text-[--color-primary] dark:text-[--color-primary]">
-                <Typewriter
-                  words={[
-                    "Full Stack Developer",
-                    "Designer",
-                    "Dreamer",
-                    "Builder",
-                    "Tech Lover",
-                  ]}
-                  loop={0}
-                  cursor
-                  cursorStyle="|"
-                  typeSpeed={70}
-                  deleteSpeed={50}
-                  delaySpeed={1000}
-                />
-              </span>{" "}
-              based in Zambia — available remotely.
+            <p className="text-base sm:text-lg md:text-xl mb-4 leading-relaxed text-white font-serif">
+              I’m a full stack developer building clean, scalable applications
+              with React, Next.js, Django & Node. Based in Zambia — available
+              remotely.
             </p>
             <p className="text-sm italic mb-6 text-yellow-100 font-serif">
               Currently open for freelance or remote full-time roles.

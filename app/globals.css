@@ -115,7 +115,7 @@
     @apply border-border outline-ring/50;
   }
   html, body {
-    @apply bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white;
+    @apply bg-gradient-to-tl from-[#db8805] to-yellow-200 text-white;
     overflow-x: hidden;
   }
 }
