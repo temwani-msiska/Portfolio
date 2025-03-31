@@ -116,6 +116,7 @@
   }
   html, body {
     @apply bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white;
+    overflow-x: hidden;
   }
 }
 

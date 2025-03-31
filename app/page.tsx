@@ -57,13 +57,13 @@ export default function Home() {
         />
         <meta name="twitter:image" content="/Profile-Port.jpg" />
         <meta
-            property="og:see_also"
-            content="https://github.com/temwani-msiska"
-          />
-          <meta
-            property="og:see_also"
-            content="https://www.linkedin.com/in/temwani-msiska-3640a827b/"
-          />
+          property="og:see_also"
+          content="https://github.com/temwani-msiska"
+        />
+        <meta
+          property="og:see_also"
+          content="https://www.linkedin.com/in/temwani-msiska-3640a827b/"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -89,16 +89,25 @@ export default function Home() {
               ],
             }),
           }}
-          
         />
-        
       </Head>
 
-      <main className="min-h-screen overflow-x-hidden flex flex-col text-white px-4 sm:px-6 md:px-12 pt-2 sm:pt-4 bg-gradient-to-tl from-[#db8805] to-yellow-500">
+      <main className="min-h-screen flex flex-col text-white px-4 sm:px-6 md:px-12 pt-2 sm:pt-4 bg-gradient-to-tl from-[#db8805] to-yellow-500">
         {/* Header */}
         <header className="w-full max-w-7xl mx-auto sticky top-0 z-50 flex justify-between items-center bg-transparent py-2 sm:py-3">
           {/* Logo */}
-          <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 relative">
+          <motion.a
+            href="/"
+            initial={{ scale: 1 }}
+            animate={{ scale: [1, 1.05, 1], rotate: [0, 2, 0] }}
+            transition={{
+              repeat: Infinity,
+              repeatType: "mirror",
+              duration: 4,
+              ease: "easeInOut",
+            }}
+            className="relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-white shadow-lg hover:shadow-yellow-300/40 transition-shadow duration-500"
+          >
             <Image
               src={logo}
               alt="Temwani Msiska Logo"
@@ -106,7 +115,7 @@ export default function Home() {
               className="object-contain"
               priority
             />
-          </div>
+          </motion.a>
 
           {/* Desktop Nav Links */}
           <nav className="hidden sm:flex space-x-6 md:space-x-8 text-sm md:text-base font-semibold tracking-wide">
@@ -152,7 +161,6 @@ export default function Home() {
               </svg>
             </button>
           </div>
-        
         </header>
 
         {/* Mobile Nav Menu */}
