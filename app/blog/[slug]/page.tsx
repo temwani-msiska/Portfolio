@@ -1,9 +1,16 @@
+// app/blog/[slug]/page.tsx
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { marked } from 'marked';
 import { notFound } from 'next/navigation';
 import Header from '@/components/Header';
+
+
+type BlogPostProps = {
+  params: { slug: string };
+};
+
 
 export async function generateStaticParams() {
   const files = fs.readdirSync(path.join(process.cwd(), 'content/blog'));
@@ -12,8 +19,7 @@ export async function generateStaticParams() {
   }));
 }
 
-// ✅ DO NOT NAME THIS FUNCTION 'Page'
-export default async function BlogPost({ params }: { params: { slug: string } }) {
+export default async function BlogPost({ params }: BlogPostProps) {
   const filePath = path.join(process.cwd(), 'content/blog', `${params.slug}.md`);
 
   if (!fs.existsSync(filePath)) {
