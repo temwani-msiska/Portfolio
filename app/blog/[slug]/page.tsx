@@ -7,40 +7,7 @@ type PageProps = {
   };
 };
 
-const posts: Record<string, { title: string; date: string; content: string }> =
-  {
-    "nextjs-portfolio": {
-      title: "How I Built My Portfolio with Next.js 14",
-      date: "March 2025",
-      content: `
-  ## Stack Breakdown
-  
-  - Next.js 14 App Router
-  - Tailwind CSS
-  - TypeScript
-  - Vercel for deployment
-  
-  ## Key Takeaways
-  
-  Clean structure, fast builds, and fun to write with!
-      `,
-    },
-    "react-vs-django": {
-      title: "React vs. Django: Best Practices",
-      date: "February 2025",
-      content: `
-  ## When to Use React
-  
-  React excels at dynamic UIs and client-side interactivity...
-  
-  ## When to Use Django
-  
-  Django's power lies in backend logic, APIs, and admin tools.
-      `,
-    },
-  };
-
-export default function BlogPost({ params }: PageProps) {
+export default async function BlogPost({ params }: PageProps) {
   const post = posts[params.slug];
 
   if (!post) return notFound();
@@ -59,3 +26,35 @@ export default function BlogPost({ params }: PageProps) {
     </main>
   );
 }
+
+const posts: Record<string, { title: string; date: string; content: string }> = {
+  "nextjs-portfolio": {
+    title: "How I Built My Portfolio with Next.js 14",
+    date: "March 2025",
+    content: `
+      ## Stack Breakdown
+      
+      - Next.js 14 App Router
+      - Tailwind CSS
+      - TypeScript
+      - Vercel for deployment
+      
+      ## Key Takeaways
+      
+      Clean structure, fast builds, and fun to write with!
+    `,
+  },
+  "react-vs-django": {
+    title: "React vs. Django: Best Practices",
+    date: "February 2025",
+    content: `
+      ## When to Use React
+      
+      React excels at dynamic UIs and client-side interactivity...
+      
+      ## When to Use Django
+      
+      Django's power lies in backend logic, APIs, and admin tools.
+    `,
+  },
+};
