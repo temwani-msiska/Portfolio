@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import profilePic from "../public/Profile-Port.jpg";
 import logo from "../public/Logo_Final.png";
 import Head from "next/head";
-import { Typewriter } from "react-simple-typewriter";
 import {
   motion,
   AnimatePresence,
@@ -214,7 +213,7 @@ export default function Home() {
                 variant="outline"
                 className="border-white text-white hover:bg-white hover:text-yellow-700 transition-colors duration-300"
                 onClick={() =>
-                  (window.location.href = "mailto:temwani.msiska@gmail.com")
+                  (window.location.href = "mailto:contact.temwanimsiska.dev")
                 }
               >
                 Email
