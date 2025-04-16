@@ -137,14 +137,22 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-4">
               <Button
+                type="button"
                 variant="outline"
                 className="border-white text-white hover:bg-white hover:text-yellow-700 transition-colors duration-300"
-                onClick={() =>
-                  window.open("mailto:temwani.msiska@gmail.com", "_self")
-                }                
+                onClick={() => {
+                  const email = "temwani.msiska@gmail.com";
+                  const subject = "Let’s Work Together";
+                  const body =
+                    "Hi Temwani,\n\nI came across your portfolio and would love to connect!";
+                  window.location.href = `mailto:${email}?subject=${encodeURIComponent(
+                    subject
+                  )}&body=${encodeURIComponent(body)}`;
+                }}
               >
                 Email
               </Button>
+
               <Button
                 variant="outline"
                 className="border-white text-white hover:bg-white hover:text-yellow-700 transition-colors duration-300"
