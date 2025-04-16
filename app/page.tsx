@@ -140,8 +140,8 @@ export default function Home() {
                 variant="outline"
                 className="border-white text-white hover:bg-white hover:text-yellow-700 transition-colors duration-300"
                 onClick={() =>
-                  (window.location.href = "mailto:temwani.msiska@gmail.com")
-                }
+                  window.open("mailto:temwani.msiska@gmail.com", "_self")
+                }                
               >
                 Email
               </Button>
