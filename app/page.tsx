@@ -11,6 +11,7 @@ import {
   AnimatePresence,
   useScroll,
   useTransform,
+
 } from "framer-motion";
 
 export default function Home() {
@@ -90,6 +91,7 @@ export default function Home() {
 
       <main className="min-h-screen flex flex-col text-white px-4 sm:px-6 md:px-12 pt-2 sm:pt-4 bg-gradient-to-tl from-[#db8805] to-yellow-500">
         <Header />
+
         {/* Mobile Nav Menu */}
         <AnimatePresence>
           {menuOpen && (
@@ -136,22 +138,12 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-4">
-              <Button
-                type="button"
-                variant="outline"
-                className="border-white text-white hover:bg-white hover:text-yellow-700 transition-colors duration-300"
-                onClick={() => {
-                  const email = "temwani.msiska@gmail.com";
-                  const subject = "Let’s Work Together";
-                  const body =
-                    "Hi Temwani,\n\nI came across your portfolio and would love to connect!";
-                  window.location.href = `mailto:${email}?subject=${encodeURIComponent(
-                    subject
-                  )}&body=${encodeURIComponent(body)}`;
-                }}
+              <a
+                href="mailto:temwani.msiska@gmail.com?subject=Let’s Work Together&body=Hi Temwani,%0A%0AI came across your portfolio and would love to connect!"
+                className="inline-flex items-center justify-center px-4 py-2 border border-white text-white rounded hover:bg-white hover:text-yellow-700 transition-colors duration-300"
               >
                 Email
-              </Button>
+              </a>
 
               <Button
                 variant="outline"
