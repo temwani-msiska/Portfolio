@@ -14,10 +14,20 @@ export default async function BlogPostPage({ params }: PageProps) {
   // await the params to get the slug
   const { slug } = await params;
 
-  // use the Post type so ESLint won't complain
-  const post: Post | undefined = await getPost(slug);
+  // debug: log the incoming slug
+  console.log("[BlogPostPage] slug:", slug);
+
+  // fetch the post and log success or failure
+  let post: Post | undefined;
+  try {
+    post = await getPost(slug);
+    console.log("[BlogPostPage] fetched post:", post);
+  } catch (err) {
+    console.error("[BlogPostPage] getPost error:", err);
+  }
 
   if (!post) {
+    console.log("[BlogPostPage] no post found, returning 404");
     return notFound();
   }
 
