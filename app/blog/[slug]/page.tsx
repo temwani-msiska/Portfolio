@@ -1,44 +1,78 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
-import { marked } from "marked";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 
-export async function generateStaticParams() {
-  const files = fs.readdirSync(path.join(process.cwd(), "content/blog"));
-  return files.map((file) => ({
-    slug: file.replace(".md", ""),
-  }));
+interface Post {
+  id: number;
+  Title: string;
+  Slug: string;
+  Content: any; 
+  CoverImage?: {
+    url: string;
+  };
+  PostStatus: "draft" | "published";
+  PublishDate: string;
 }
 
-export default async function BlogPost({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+async function getPost(slug: string) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/posts?filters[$and][0][Slug][$eq]=${slug}&filters[$and][1][PostStatus][$eq]=published&populate=*`, {
+    cache: "no-store",
+  });
 
-  const filePath = path.join(process.cwd(), "content/blog", `${slug}.md`);
-
-  if (!fs.existsSync(filePath)) {
-    return notFound();
+  if (!res.ok) {
+    throw new Error("Failed to fetch post");
   }
 
-  const fileContent = fs.readFileSync(filePath, "utf-8");
-  const { data, content } = matter(fileContent);
-  const html = marked.parse(content);
+  const data = await res.json();
+  return data.data[0] as Post | undefined;
+}
+
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
+
+  const post = await getPost(slug);
+
+  if (!post) {
+    return notFound();
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12">
       <Header />
       <div className="max-w-3xl mx-auto space-y-6">
-        <h1 className="text-4xl font-bold">{data.title}</h1>
-        <p className="text-yellow-200 text-sm">{data.date}</p>
-        <div
-          className="prose prose-invert mt-6"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
+        <h1 className="text-4xl font-bold">{post.Title}</h1>
+        <p className="text-yellow-200 text-sm">
+          {new Date(post.PublishDate).toLocaleDateString()}
+        </p>
+        {post.CoverImage?.url && (
+          <img
+            src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${post.CoverImage.url}`}
+            alt={post.Title}
+            className="rounded-lg w-full h-96 object-cover my-6"
+          />
+        )}
+        <div className="prose prose-invert mt-6 max-w-none">
+          {Array.isArray(post.Content) ? (
+            post.Content.map((block, index) => {
+              if (block.type === "paragraph") {
+                return (
+                  <p key={index}>
+                    {block.children.map((child: any) => child.text).join("")}
+                  </p>
+                );
+              }
+              if (block.type === "heading") {
+                return (
+                  <h2 key={index}>
+                    {block.children.map((child: any) => child.text).join("")}
+                  </h2>
+                );
+              }
+              return null;
+            })
+          ) : (
+            <p>{typeof post.Content === "string" ? post.Content : "No content available."}</p>
+          )}
+        </div>
       </div>
     </main>
   );
