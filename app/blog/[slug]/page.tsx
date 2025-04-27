@@ -1,5 +1,3 @@
-// app/blog/[slug]/page.tsx
-import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Image from "next/image";
 import { getPost } from "@/lib/posts";
@@ -15,11 +13,12 @@ export default async function BlogPostPage({ params }: PageProps) {
   let post: Post | undefined;
   try {
     post = await getPost(slug);
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const error = err as Error;
     return (
       <div className="p-8 bg-red-100 text-red-800">
         <h1 className="text-2xl font-bold mb-4">❌ Fetch error</h1>
-        <pre>{String(err.message || err)}</pre>
+        <pre>{String(error.message || error)}</pre>
       </div>
     );
   }
