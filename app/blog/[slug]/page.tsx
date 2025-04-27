@@ -13,6 +13,12 @@ interface Post {
   PublishDate: string;
 }
 
+interface PageProps {
+  params: {
+    slug: string;
+  };
+}
+
 async function getPost(slug: string) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/posts?filters[$and][0][Slug][$eq]=${slug}&filters[$and][1][PostStatus][$eq]=published&populate=*`, {
     cache: "no-store",
@@ -26,7 +32,7 @@ async function getPost(slug: string) {
   return data.data[0] as Post | undefined;
 }
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = params;
 
   const post = await getPost(slug);
@@ -52,7 +58,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         )}
         <div className="prose prose-invert mt-6 max-w-none">
           {Array.isArray(post.Content) ? (
-            post.Content.map((block, index) => { // <- index added here
+            post.Content.map((block, index) => {
               if (block.type === "paragraph") {
                 return (
                   <p key={index}>
