@@ -14,8 +14,11 @@ export default function BlogPage() {
 
   useEffect(() => {
     getPosts()
-      .then(setPosts)
-      .catch((err) => console.error(err));
+      .then((fetchedPosts) => {
+        console.log("Fetched Posts:", fetchedPosts); // Log all posts after fetching
+        setPosts(fetchedPosts);
+      })
+      .catch((err) => console.error("Error fetching posts:", err));
   }, []);
 
   const makeExcerpt = (content: Post["Content"], len = 120) => {
@@ -44,6 +47,7 @@ export default function BlogPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {posts.length ? (
             posts.slice(0, visibleCount).map((post, i) => {
+              console.log(`Rendering Post [${i}]:`, post); // Log each post during map
               const coverUrl = post.CoverImage?.data?.attributes?.url;
 
               return (
@@ -53,7 +57,7 @@ export default function BlogPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: i * 0.1 }}
                 >
-                  <Link href={`/blog/${post.Slug}`}>
+                  <Link href={`/blog/${post.Slug}`} legacyBehavior>
                     <a className="group block bg-white/10 border border-white/10 backdrop-blur-md rounded-lg p-4 hover:border-yellow-400 transition-colors space-y-4 overflow-hidden">
                       {/* Cover */}
                       {coverUrl ? (
@@ -105,7 +109,10 @@ export default function BlogPage() {
         {visibleCount < posts.length && (
           <div className="text-center">
             <button
-              onClick={() => setVisibleCount((c) => c + 3)}
+              onClick={() => {
+                console.log("Load More clicked"); // Log when Load More button is clicked
+                setVisibleCount((c) => c + 3);
+              }}
               className="mt-8 bg-white/20 hover:bg-yellow-400 text-white font-semibold px-6 py-3 rounded-lg transition"
             >
               Load More
