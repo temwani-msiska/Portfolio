@@ -1,26 +1,28 @@
 // types/posts.ts
 
-// Mirror Strapi v5 media shape
+/** Rich-text paragraph block */
+export interface TextBlock {
+  __component: "content.text-block";
+  body: string; // HTML string
+}
+
+/** Strapi v5 “relation to media” shape */
 export interface StrapiMedia {
   data?: {
     attributes?: {
-      url?: string;
+      url: string;
     };
   };
 }
 
-export interface TextBlock {
-  __component: "content.text-block";
-  body: string;        // rich-text HTML
-}
-
-export interface ContentImageBlock {
-  __component: "content.content-image";
+/** Image block: UID must match your component’s actual __component value */
+export interface ImageBlock {
+  __component: "content.image" | "content.content-image";
   image: StrapiMedia;
   caption?: string;
 }
 
-export type ContentBlock = TextBlock | ContentImageBlock;
+export type ContentBlock = TextBlock | ImageBlock;
 
 export interface Post {
   id: number;
@@ -29,5 +31,5 @@ export interface Post {
   Content: ContentBlock[];
   CoverImage?: StrapiMedia;
   PostStatus: "draft" | "published";
-  PublishDate?: string;
+  PublishDate: string;
 }

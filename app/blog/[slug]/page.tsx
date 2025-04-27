@@ -3,12 +3,7 @@ import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Image from "next/image";
 import { getPost } from "@/lib/posts";
-import type {
-  Post,
-  TextBlock,
-  ContentImageBlock,
-  StrapiMedia,
-} from "@/types/posts";
+import type { Post, TextBlock, ImageBlock } from "@/types/posts";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -16,22 +11,33 @@ interface PageProps {
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
+  console.log("[BlogPostPage] slug:", slug);
+
   let post: Post | undefined;
   try {
     post = await getPost(slug);
-  } catch (err) {
-    console.error("getPost error", err);
+    console.log("[BlogPostPage] fetched post:", post);
+  } catch (error) {
+    console.error("[BlogPostPage] getPost error:", error);
   }
   if (!post) return notFound();
 
+  // unwrap dynamic zone safely
   const blocks = Array.isArray(post.Content) ? post.Content : [];
+  console.log("[BlogPostPage] blocks:", blocks);
+
+  // extract cover-url
   const coverUrl = post.CoverImage?.data?.attributes?.url;
+  console.log("[BlogPostPage] coverUrl:", coverUrl);
 
   return (
     <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12">
       <Header />
       <div className="max-w-3xl mx-auto space-y-6">
+        {/* Title */}
         <h1 className="text-4xl font-bold">{post.Title}</h1>
+
+        {/* Date */}
         {post.PublishDate && (
           <p className="text-yellow-200 text-sm">
             {new Date(post.PublishDate).toLocaleDateString(undefined, {
@@ -42,6 +48,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           </p>
         )}
 
+        {/* Cover Image */}
         {coverUrl && (
           <div className="relative w-full h-96 my-6">
             <Image
@@ -55,9 +62,11 @@ export default async function BlogPostPage({ params }: PageProps) {
           </div>
         )}
 
+        {/* Dynamic Zone Content */}
         <div className="prose prose-invert mt-6 max-w-none">
           {blocks.length > 0 ? (
             blocks.map((block, idx) => {
+              // text block
               if (block.__component === "content.text-block") {
                 const tb = block as TextBlock;
                 return (
@@ -68,9 +77,14 @@ export default async function BlogPostPage({ params }: PageProps) {
                 );
               }
 
-              if (block.__component === "content.content-image") {
-                const ib = block as ContentImageBlock;
-                const imgUrl = ib.image?.data?.attributes?.url;
+              // image block (either UID)
+              if (
+                block.__component === "content.image" ||
+                block.__component === "content.content-image"
+              ) {
+                const ib = block as ImageBlock;
+                const imgUrl = ib.image.data?.attributes?.url;
+                console.log(`[BlogPostPage] block[${idx}] imgUrl:`, imgUrl);
                 if (!imgUrl) return null;
 
                 return (
@@ -95,9 +109,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               return null;
             })
           ) : (
-            <p className="text-center text-white/70">
-              No content available.
-            </p>
+            <p className="text-center text-white/70">No content available.</p>
           )}
         </div>
       </div>
