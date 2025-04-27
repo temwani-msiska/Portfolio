@@ -1,3 +1,4 @@
+// app/blog/page.tsx
 "use client";
 
 import Header from "@/components/Header";
@@ -13,10 +14,11 @@ export default function BlogPage() {
   const [visibleCount, setVisibleCount] = useState(3);
 
   useEffect(() => {
-    getPosts().then(setPosts).catch(console.error);
+    getPosts()
+      .then(setPosts)
+      .catch((err) => console.error(err));
   }, []);
 
-  // grab only text-block bodies, strip HTML, then slice
   const makeExcerpt = (content: Post["Content"], len = 120) => {
     const html = content
       .filter((b): b is TextBlock => b.__component === "content.text-block")
