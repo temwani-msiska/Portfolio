@@ -6,15 +6,15 @@ import { getPost } from "@/lib/posts";
 import type { Post, TextBlock, ImageBlock } from "@/types/posts";
 
 interface PageProps {
-  params: {
-    slug: string;
-  };
+  // Next.js expects params to be a Promise here
+  params: Promise<{ slug: string }>;
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
-  const { slug } = params;
+  // await the params to get the slug
+  const { slug } = await params;
 
-  // ← Use the Post type here so it's not “unused”
+  // use the Post type so ESLint won't complain
   const post: Post | undefined = await getPost(slug);
 
   if (!post) {
