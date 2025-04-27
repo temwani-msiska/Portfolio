@@ -52,18 +52,18 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         )}
         <div className="prose prose-invert mt-6 max-w-none">
           {Array.isArray(post.Content) ? (
-            post.Content.map((block) => { 
+            post.Content.map((block, index) => { // <- index added here
               if (block.type === "paragraph") {
                 return (
                   <p key={index}>
-                    {block.children.map((child: any) => child.text).join("")}
+                    {block.children.map((child) => child.text).join("")}
                   </p>
                 );
               }
               if (block.type === "heading") {
                 return (
                   <h2 key={index}>
-                    {block.children.map((child: any) => child.text).join("")}
+                    {block.children.map((child) => child.text).join("")}
                   </h2>
                 );
               }
