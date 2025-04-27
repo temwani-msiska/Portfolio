@@ -11,13 +11,14 @@ interface PageProps {
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
-
-  // Use Post type here so it's not “unused”
-  const post: Post | undefined = await getPost(slug);
+  const post = await getPost(slug);
   if (!post) return notFound();
 
-  const blocks = Array.isArray(post.Content) ? post.Content : [];
+  // Cover image URL (if it exists)
   const coverUrl = post.CoverImage?.data?.attributes?.url;
+
+  // Dynamic zone blocks
+  const blocks = Array.isArray(post.Content) ? post.Content : [];
 
   return (
     <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12">
@@ -52,11 +53,11 @@ export default async function BlogPostPage({ params }: PageProps) {
           </div>
         )}
 
-        {/* Dynamic Zone Content */}
+        {/* Rich Text Blocks */}
         <div className="prose prose-invert mt-6 max-w-none">
-          {blocks.length > 0 ? (
+          {blocks.length ? (
             blocks.map((block, idx) => {
-              // Text block
+              // — Text block
               if (block.__component === "content.text-block") {
                 const tb = block as TextBlock;
                 return (
@@ -67,13 +68,14 @@ export default async function BlogPostPage({ params }: PageProps) {
                 );
               }
 
-              // Image block (either UID)
+              // — Image block (dynamic zone)
               if (
                 block.__component === "content.image" ||
                 block.__component === "content.content-image"
               ) {
                 const ib = block as ImageBlock;
-                const imgUrl = ib.image.data?.attributes?.url;
+                // <-- optional chain on `.image`
+                const imgUrl = ib.image?.data?.attributes?.url;
                 if (!imgUrl) return null;
 
                 return (
