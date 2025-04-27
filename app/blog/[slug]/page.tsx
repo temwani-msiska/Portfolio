@@ -5,7 +5,7 @@ interface Post {
   id: number;
   Title: string;
   Slug: string;
-  Content: any; 
+  Content: { type: string; children: { text: string }[] }[];
   CoverImage?: {
     url: string;
   };
@@ -52,7 +52,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         )}
         <div className="prose prose-invert mt-6 max-w-none">
           {Array.isArray(post.Content) ? (
-            post.Content.map((block, index) => {
+            post.Content.map((block) => { 
               if (block.type === "paragraph") {
                 return (
                   <p key={index}>
