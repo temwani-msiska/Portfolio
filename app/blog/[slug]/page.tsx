@@ -13,7 +13,9 @@ interface PageProps {
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = params;
-  const post = await getPost(slug);
+
+  // ← Use the Post type here so it's not “unused”
+  const post: Post | undefined = await getPost(slug);
 
   if (!post) {
     return notFound();
@@ -57,7 +59,6 @@ export default async function BlogPostPage({ params }: PageProps) {
           {post.Content.map((block, idx) => {
             switch (block.__component) {
               case "content.text-block":
-                // TextBlock: renders rich HTML
                 return (
                   <div
                     key={idx}
@@ -68,7 +69,6 @@ export default async function BlogPostPage({ params }: PageProps) {
                 );
 
               case "content.image":
-                // ImageBlock: renders Media + optional caption
                 const imgBlock = block as ImageBlock;
                 return (
                   <figure key={idx} className="my-8 text-center">
