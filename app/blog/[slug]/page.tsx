@@ -1,4 +1,3 @@
-// app/blog/[slug]/page.tsx
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Image from "next/image";
@@ -6,18 +5,13 @@ import { getPost } from "@/lib/posts";
 import type { Post, TextBlock, ImageBlock } from "@/types/posts";
 
 interface PageProps {
-  // Next.js expects params to be a Promise here
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
-  // await the params to get the slug
-  const { slug } = await params;
+  const { slug } = params;
+  console.log("[BlogPostPage] slug is:", slug);
 
-  // debug: log the incoming slug
-  console.log("[BlogPostPage] slug:", slug);
-
-  // fetch the post and log success or failure
   let post: Post | undefined;
   try {
     post = await getPost(slug);
@@ -50,7 +44,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           </p>
         )}
 
-        {/* CoverImage */}
+        {/* Cover Image */}
         {post.CoverImage?.url && (
           <div className="relative w-full h-96 my-6">
             <Image
