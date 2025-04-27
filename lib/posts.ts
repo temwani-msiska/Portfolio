@@ -14,7 +14,8 @@ export async function getPosts(): Promise<Post[]> {
   const res = await fetch(
     `${API}/api/posts?` +
       `populate[CoverImage]=*&` +
-      `populate[Content][populate]=*`,
+      `populate[Content][populate]=*` +
+      `&publicationState=preview`, // ✅ added preview mode
     { cache: "no-store" }
   );
   if (!res.ok) throw new Error("Failed to fetch posts");
@@ -22,7 +23,7 @@ export async function getPosts(): Promise<Post[]> {
   const json = (await res.json()) as StrapiListResponse<Post>;
   return json.data.map((item) => ({
     ...item.attributes,
-    id: item.id, // 👈 put id **after** spreading attributes
+    id: item.id,
   }));
 }
 
@@ -30,7 +31,10 @@ export async function getPost(slug: string): Promise<Post | undefined> {
   const url =
     `${API}/api/posts?` +
     `filters[Slug][$eq]=${encodeURIComponent(slug)}` +
-    `&populate[CoverImage]=*&populate[Content][populate]=*`;
+    `&populate[CoverImage]=*&populate[Content][populate]=*` +
+    `&publicationState=preview`; // ✅ added preview mode
+
+  console.log("[getPost] Fetching from:", url); // (optional) debug
 
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error("Failed to fetch post");
@@ -41,6 +45,6 @@ export async function getPost(slug: string): Promise<Post | undefined> {
 
   return {
     ...item.attributes,
-    id: item.id, // 👈 same fix here
+    id: item.id,
   };
 }
