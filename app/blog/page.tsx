@@ -5,49 +5,26 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-
-interface ContentBlock {
-  type: string;
-  children: { text: string }[];
-}
-
-interface Post {
-  id: number;
-  Title: string;
-  Slug: string;
-  Content: ContentBlock[];
-  CoverImage?: { url: string };
-  PostStatus: "draft" | "published";
-  PublishDate: string;
-}
-
-async function getPosts(): Promise<Post[]> {
-  const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/posts?populate=*`;
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`Failed to fetch posts: [${res.status}] ${errText}`);
-  }
-  const json = await res.json();
-  return json.data as Post[];
-}
+import { getPosts } from "../../lib/posts";
+import type { Post, TextBlock } from "../../types/posts";
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [visibleCount, setVisibleCount] = useState(3);
 
   useEffect(() => {
-    getPosts()
-      .then(setPosts)
-      .catch((err) => console.error(err));
+    getPosts().then(setPosts).catch(console.error);
   }, []);
 
-  // Flatten blocks → text → slice
-  const makeExcerpt = (blocks: ContentBlock[], len = 100) =>
-    blocks
-      .map((blk) => blk.children.map((c) => c.text).join(""))
-      .join(" ")
-      .slice(0, len);
+  // grab only text-block bodies, strip HTML, then slice
+  const makeExcerpt = (content: Post["Content"], len = 120) => {
+    const html = content
+      .filter((b): b is TextBlock => b.__component === "content.text-block")
+      .map((b) => b.body)
+      .join(" ");
+    const text = html.replace(/<[^>]+>/g, "");
+    return text.length > len ? text.slice(0, len) + "…" : text;
+  };
 
   return (
     <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12">
@@ -64,7 +41,7 @@ export default function BlogPage() {
 
         {/* Posts Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          {posts.length > 0 ? (
+          {posts.length ? (
             posts.slice(0, visibleCount).map((post, i) => (
               <motion.div
                 key={post.id}
@@ -73,7 +50,7 @@ export default function BlogPage() {
                 transition={{ duration: 0.4, delay: i * 0.1 }}
               >
                 <Link href={`/blog/${post.Slug}`}>
-                  <div className="group block bg-white/10 border border-white/10 backdrop-blur-md rounded-lg p-4 hover:border-yellow-400 transition-colors cursor-pointer space-y-4 overflow-hidden">
+                  <a className="group block bg-white/10 border border-white/10 backdrop-blur-md rounded-lg p-4 hover:border-yellow-400 transition-colors space-y-4 overflow-hidden">
                     {/* Cover */}
                     {post.CoverImage?.url ? (
                       <div className="relative w-full h-48 rounded-lg overflow-hidden">
@@ -92,26 +69,22 @@ export default function BlogPage() {
                       </div>
                     )}
 
-                    {/* Title */}
+                    {/* Title & Excerpt */}
                     <h2 className="text-2xl font-bold group-hover:text-yellow-300 transition-colors">
                       {post.Title}
                     </h2>
-
-                    {/* Excerpt */}
-                    <p className="text-white/80 mt-2">
-                      {makeExcerpt(post.Content)}…
-                    </p>
+                    <p className="text-white/80">{makeExcerpt(post.Content)}</p>
 
                     {/* Date */}
-                    <p className="text-yellow-200 text-sm mt-4">
+                    <p className="text-yellow-200 text-sm">
                       {new Date(post.PublishDate).toLocaleDateString()}
                     </p>
-                  </div>
+                  </a>
                 </Link>
               </motion.div>
             ))
           ) : (
-            <p className="text-center text-white/70 col-span-2">
+            <p className="col-span-2 text-center text-white/70">
               No published blog posts yet.
             </p>
           )}
