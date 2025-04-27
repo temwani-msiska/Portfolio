@@ -11,13 +11,12 @@ interface PageProps {
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
-  const post = await getPost(slug);
+
+  // ← annotate with Post so the import isn’t “unused”
+  const post: Post | undefined = await getPost(slug);
   if (!post) return notFound();
 
-  // Cover image URL (if it exists)
   const coverUrl = post.CoverImage?.data?.attributes?.url;
-
-  // Dynamic zone blocks
   const blocks = Array.isArray(post.Content) ? post.Content : [];
 
   return (
@@ -25,10 +24,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       <Header />
 
       <div className="max-w-3xl mx-auto space-y-6">
-        {/* Title */}
         <h1 className="text-4xl font-bold">{post.Title}</h1>
-
-        {/* Publish Date */}
         {post.PublishDate && (
           <p className="text-yellow-200 text-sm">
             {new Date(post.PublishDate).toLocaleDateString(undefined, {
@@ -39,7 +35,6 @@ export default async function BlogPostPage({ params }: PageProps) {
           </p>
         )}
 
-        {/* Cover Image */}
         {coverUrl && (
           <div className="relative w-full h-96 my-6">
             <Image
@@ -53,11 +48,9 @@ export default async function BlogPostPage({ params }: PageProps) {
           </div>
         )}
 
-        {/* Rich Text Blocks */}
         <div className="prose prose-invert mt-6 max-w-none">
           {blocks.length ? (
             blocks.map((block, idx) => {
-              // — Text block
               if (block.__component === "content.text-block") {
                 const tb = block as TextBlock;
                 return (
@@ -68,13 +61,11 @@ export default async function BlogPostPage({ params }: PageProps) {
                 );
               }
 
-              // — Image block (dynamic zone)
               if (
                 block.__component === "content.image" ||
                 block.__component === "content.content-image"
               ) {
                 const ib = block as ImageBlock;
-                // <-- optional chain on `.image`
                 const imgUrl = ib.image?.data?.attributes?.url;
                 if (!imgUrl) return null;
 
