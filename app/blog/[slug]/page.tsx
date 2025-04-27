@@ -15,9 +15,9 @@ interface Post {
 }
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 async function getPost(slug: string) {
@@ -36,21 +36,8 @@ async function getPost(slug: string) {
   return data.data[0] as Post | undefined;
 }
 
-// ✅ IMPORTANT: Added for Next.js 15 routing to work!
-export async function generateStaticParams() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/posts?populate=*`, {
-    cache: "no-store",
-  });
-  const data = await res.json();
-  const posts = data.data as Post[];
-
-  return posts.map((post) => ({
-    slug: post.Slug,
-  }));
-}
-
 export default async function BlogPostPage({ params }: PageProps) {
-  const { slug } = params;
+  const { slug } = await params;
 
   const post = await getPost(slug);
 
