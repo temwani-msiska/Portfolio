@@ -4,11 +4,11 @@ import { getPost } from "@/lib/posts";
 import type { Post, TextBlock, ImageBlock } from "@/types/posts";
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
-  const { slug } = params;
+  const { slug } = await params;
 
   let post: Post | undefined;
   try {
