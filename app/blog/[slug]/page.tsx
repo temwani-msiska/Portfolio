@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
+import Image from "next/image";
 
 interface Post {
   id: number;
@@ -14,15 +15,18 @@ interface Post {
 }
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 async function getPost(slug: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/posts?filters[$and][0][Slug][$eq]=${slug}&filters[$and][1][PostStatus][$eq]=published&populate=*`, {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/posts?filters[$and][0][Slug][$eq]=${slug}&filters[$and][1][PostStatus][$eq]=published&populate=*`,
+    {
+      cache: "no-store",
+    }
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch post");
@@ -33,7 +37,7 @@ async function getPost(slug: string) {
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
-  const { slug } = params;
+  const { slug } = await params;
 
   const post = await getPost(slug);
 
@@ -46,15 +50,26 @@ export default async function BlogPostPage({ params }: PageProps) {
       <Header />
       <div className="max-w-3xl mx-auto space-y-6">
         <h1 className="text-4xl font-bold">{post.Title}</h1>
-        <p className="text-yellow-200 text-sm">
-          {new Date(post.PublishDate).toLocaleDateString()}
-        </p>
+        {post.PublishDate && (
+          <p className="text-yellow-200 text-sm">
+            {new Date(post.PublishDate).toLocaleDateString(undefined, {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </p>
+        )}
         {post.CoverImage?.url && (
-          <img
-            src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${post.CoverImage.url}`}
-            alt={post.Title}
-            className="rounded-lg w-full h-96 object-cover my-6"
-          />
+          <div className="relative w-full h-96 my-6">
+            <Image
+              src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${post.CoverImage.url}`}
+              alt={post.Title || "Blog Post Cover"}
+              fill
+              className="rounded-lg object-cover"
+              sizes="(max-width: 768px) 100vw, 700px"
+              priority
+            />
+          </div>
         )}
         <div className="prose prose-invert mt-6 max-w-none">
           {Array.isArray(post.Content) ? (
@@ -76,7 +91,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               return null;
             })
           ) : (
-            <p>{typeof post.Content === "string" ? post.Content : "No content available."}</p>
+            <p>No content available.</p>
           )}
         </div>
       </div>
