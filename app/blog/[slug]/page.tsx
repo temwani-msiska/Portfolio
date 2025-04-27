@@ -11,7 +11,9 @@ interface PageProps {
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
-  const post = await getPost(slug);
+
+  // Use Post type here so it's not “unused”
+  const post: Post | undefined = await getPost(slug);
   if (!post) return notFound();
 
   const blocks = Array.isArray(post.Content) ? post.Content : [];
@@ -22,7 +24,10 @@ export default async function BlogPostPage({ params }: PageProps) {
       <Header />
 
       <div className="max-w-3xl mx-auto space-y-6">
+        {/* Title */}
         <h1 className="text-4xl font-bold">{post.Title}</h1>
+
+        {/* Publish Date */}
         {post.PublishDate && (
           <p className="text-yellow-200 text-sm">
             {new Date(post.PublishDate).toLocaleDateString(undefined, {
@@ -33,6 +38,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           </p>
         )}
 
+        {/* Cover Image */}
         {coverUrl && (
           <div className="relative w-full h-96 my-6">
             <Image
@@ -40,10 +46,13 @@ export default async function BlogPostPage({ params }: PageProps) {
               alt={post.Title}
               fill
               className="rounded-lg object-cover"
+              sizes="(max-width: 768px) 100vw, 700px"
+              priority
             />
           </div>
         )}
 
+        {/* Dynamic Zone Content */}
         <div className="prose prose-invert mt-6 max-w-none">
           {blocks.length > 0 ? (
             blocks.map((block, idx) => {
@@ -63,36 +72,23 @@ export default async function BlogPostPage({ params }: PageProps) {
                 block.__component === "content.image" ||
                 block.__component === "content.content-image"
               ) {
-                // safely grab whatever is in `block.image`
-                const rawImage = (block as any).image;
-                // now safely extract a URL
-                const imgUrl =
-                  typeof rawImage === "string"
-                    ? rawImage
-                    : typeof rawImage?.url === "string"
-                    ? rawImage.url
-                    : rawImage?.data?.attributes?.url;
-
-                if (!imgUrl) {
-                  // no image to render
-                  return null;
-                }
-
-                const caption = (block as ImageBlock).caption;
+                const ib = block as ImageBlock;
+                const imgUrl = ib.image.data?.attributes?.url;
+                if (!imgUrl) return null;
 
                 return (
                   <figure key={idx} className="my-8 text-center">
                     <Image
                       src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${imgUrl}`}
-                      alt={caption ?? post.Title}
+                      alt={ib.caption ?? post.Title}
                       width={800}
                       height={500}
                       className="mx-auto rounded"
                       sizes="(max-width: 768px) 100vw, 720px"
                     />
-                    {caption && (
+                    {ib.caption && (
                       <figcaption className="mt-2 text-sm text-white/70">
-                        {caption}
+                        {ib.caption}
                       </figcaption>
                     )}
                   </figure>
