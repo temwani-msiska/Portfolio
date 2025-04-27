@@ -6,15 +6,32 @@ import { getPost } from "@/lib/posts";
 import type { Post, TextBlock, ImageBlock } from "@/types/posts";
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
-  const { slug } = await params;
+  const { slug } = params;
 
-  // ← annotate with Post so the import isn’t “unused”
-  const post: Post | undefined = await getPost(slug);
-  if (!post) return notFound();
+  let post: Post | undefined;
+  try {
+    post = await getPost(slug);
+  } catch (err: any) {
+    return (
+      <div className="p-8 bg-red-100 text-red-800">
+        <h1 className="text-2xl font-bold mb-4">❌ Fetch error</h1>
+        <pre>{String(err.message || err)}</pre>
+      </div>
+    );
+  }
+
+  if (!post) {
+    return (
+      <div className="p-8 bg-yellow-100 text-yellow-800">
+        <h1 className="text-2xl font-bold mb-2">Post not found</h1>
+        <p>No post with slug <code>{slug}</code></p>
+      </div>
+    );
+  }
 
   const coverUrl = post.CoverImage?.data?.attributes?.url;
   const blocks = Array.isArray(post.Content) ? post.Content : [];
@@ -25,6 +42,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
       <div className="max-w-3xl mx-auto space-y-6">
         <h1 className="text-4xl font-bold">{post.Title}</h1>
+
         {post.PublishDate && (
           <p className="text-yellow-200 text-sm">
             {new Date(post.PublishDate).toLocaleDateString(undefined, {
