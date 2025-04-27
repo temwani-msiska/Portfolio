@@ -16,24 +16,19 @@ interface Post {
   Title: string;
   Slug: string;
   Content: ContentBlock[];
-  CoverImage?: {
-    url: string;
-  };
+  CoverImage?: { url: string };
   PostStatus: "draft" | "published";
   PublishDate: string;
 }
 
-async function getPosts() {
+async function getPosts(): Promise<Post[]> {
   const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/posts?populate=*`;
-  console.log("➡️ fetching posts from", url);
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) {
-    const text = await res.text();
-    console.error("❌ fetch error:", res.status, text);
-    throw new Error("Failed to fetch posts");
+    const errText = await res.text();
+    throw new Error(`Failed to fetch posts: [${res.status}] ${errText}`);
   }
   const json = await res.json();
-  console.log("✅ posts payload:", json.data);
   return json.data as Post[];
 }
 
@@ -47,19 +42,19 @@ export default function BlogPage() {
       .catch((err) => console.error(err));
   }, []);
 
-  // helper to build a plain-text excerpt
-  const makeExcerpt = (blocks: ContentBlock[], length = 100) =>
+  // Flatten blocks → text → slice
+  const makeExcerpt = (blocks: ContentBlock[], len = 100) =>
     blocks
       .map((blk) => blk.children.map((c) => c.text).join(""))
       .join(" ")
-      .slice(0, length);
+      .slice(0, len);
 
   return (
     <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12">
       <Header />
 
+      {/* Hero */}
       <div className="max-w-5xl mx-auto space-y-12">
-        {/* HERO */}
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-2">Blog</h1>
           <p className="text-white/80 text-lg">
@@ -67,7 +62,7 @@ export default function BlogPage() {
           </p>
         </div>
 
-        {/* POSTS GRID */}
+        {/* Posts Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {posts.length > 0 ? (
             posts.slice(0, visibleCount).map((post, i) => (
@@ -79,7 +74,7 @@ export default function BlogPage() {
               >
                 <Link href={`/blog/${post.Slug}`}>
                   <div className="group block bg-white/10 border border-white/10 backdrop-blur-md rounded-lg p-4 hover:border-yellow-400 transition-colors cursor-pointer space-y-4 overflow-hidden">
-                    {/* COVER */}
+                    {/* Cover */}
                     {post.CoverImage?.url ? (
                       <div className="relative w-full h-48 rounded-lg overflow-hidden">
                         <Image
@@ -97,17 +92,17 @@ export default function BlogPage() {
                       </div>
                     )}
 
-                    {/* TITLE */}
+                    {/* Title */}
                     <h2 className="text-2xl font-bold group-hover:text-yellow-300 transition-colors">
                       {post.Title}
                     </h2>
 
-                    {/* EXCERPT */}
+                    {/* Excerpt */}
                     <p className="text-white/80 mt-2">
-                      {makeExcerpt(post.Content, 100)}…
+                      {makeExcerpt(post.Content)}…
                     </p>
 
-                    {/* DATE */}
+                    {/* Date */}
                     <p className="text-yellow-200 text-sm mt-4">
                       {new Date(post.PublishDate).toLocaleDateString()}
                     </p>
@@ -122,7 +117,7 @@ export default function BlogPage() {
           )}
         </div>
 
-        {/* LOAD MORE */}
+        {/* Load More */}
         {visibleCount < posts.length && (
           <div className="text-center">
             <button
