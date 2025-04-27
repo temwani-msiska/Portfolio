@@ -5,53 +5,41 @@ import Image from "next/image";
 import { getPost } from "@/lib/posts";
 import type { Post, TextBlock, ImageBlock } from "@/types/posts";
 
+// Mirror Strapi v5 media shape
+interface StrapiMedia {
+  data?: {
+    attributes?: { url?: string };
+  };
+}
+
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Mirror Strapi v5 media shape
-interface StrapiMedia {
-  data?: {
-    attributes?: {
-      url?: string;
-    };
-  };
-}
-
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
-  console.log("[BlogPostPage] slug:", slug);
-
   let post: Post | undefined;
   try {
     post = await getPost(slug);
-    console.log("[BlogPostPage] fetched post:", post);
   } catch (err) {
-    console.error("[BlogPostPage] getPost error:", err);
+    console.error("getPost error", err);
   }
-  if (!post) {
-    console.log("[BlogPostPage] no post → 404");
-    return notFound();
-  }
+  if (!post) return notFound();
 
   // Unwrap content blocks
   const blocks = Array.isArray(post.Content) ? post.Content : [];
-  console.log("[BlogPostPage] content blocks:", blocks);
 
-  // Unwrap cover image URL
-  const coverMedia = post.CoverImage as unknown as StrapiMedia;
-  const coverUrl = coverMedia.data?.attributes?.url;
-  console.log("[BlogPostPage] coverUrl:", coverUrl);
+  // Safely unwrap cover image URL
+  const coverUrl = (post.CoverImage as StrapiMedia | undefined)
+    ?.data
+    ?.attributes
+    ?.url;
 
   return (
     <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12">
       <Header />
-
       <div className="max-w-3xl mx-auto space-y-6">
-        {/* Title */}
         <h1 className="text-4xl font-bold">{post.Title}</h1>
-
-        {/* Publish Date */}
         {post.PublishDate && (
           <p className="text-yellow-200 text-sm">
             {new Date(post.PublishDate).toLocaleDateString(undefined, {
@@ -62,7 +50,6 @@ export default async function BlogPostPage({ params }: PageProps) {
           </p>
         )}
 
-        {/* Cover Image */}
         {coverUrl && (
           <div className="relative w-full h-96 my-6">
             <Image
@@ -76,7 +63,6 @@ export default async function BlogPostPage({ params }: PageProps) {
           </div>
         )}
 
-        {/* Dynamic Zone Content */}
         <div className="prose prose-invert mt-6 max-w-none">
           {blocks.length > 0 ? (
             blocks.map((block, idx) => {
@@ -89,14 +75,13 @@ export default async function BlogPostPage({ params }: PageProps) {
                   />
                 );
               }
-
               if (block.__component === "content.image") {
-                const ib = block as ImageBlock & { image: StrapiMedia; caption?: string };
-                const imgUrl = ib.image.data?.attributes?.url;
-                console.log(`[BlogPostPage] block ${idx} imgUrl:`, imgUrl);
-
+                const ib = block as ImageBlock & {
+                  image?: StrapiMedia;
+                  caption?: string;
+                };
+                const imgUrl = ib.image?.data?.attributes?.url;
                 if (!imgUrl) return null;
-
                 return (
                   <figure key={idx} className="my-8 text-center">
                     <Image
@@ -115,11 +100,12 @@ export default async function BlogPostPage({ params }: PageProps) {
                   </figure>
                 );
               }
-
               return null;
             })
           ) : (
-            <p className="text-center text-white/70">No content available.</p>
+            <p className="text-center text-white/70">
+              No content available.
+            </p>
           )}
         </div>
       </div>
