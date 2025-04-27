@@ -3,14 +3,12 @@ import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Image from "next/image";
 import { getPost } from "@/lib/posts";
-import type { Post, TextBlock, ImageBlock } from "@/types/posts";
-
-// Mirror Strapi v5 media shape
-interface StrapiMedia {
-  data?: {
-    attributes?: { url?: string };
-  };
-}
+import type {
+  Post,
+  TextBlock,
+  ContentImageBlock,
+  StrapiMedia,
+} from "@/types/posts";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -26,14 +24,8 @@ export default async function BlogPostPage({ params }: PageProps) {
   }
   if (!post) return notFound();
 
-  // Unwrap content blocks
   const blocks = Array.isArray(post.Content) ? post.Content : [];
-
-  // Safely unwrap cover image URL
-  const coverUrl = (post.CoverImage as StrapiMedia | undefined)
-    ?.data
-    ?.attributes
-    ?.url;
+  const coverUrl = post.CoverImage?.data?.attributes?.url;
 
   return (
     <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12">
@@ -75,13 +67,12 @@ export default async function BlogPostPage({ params }: PageProps) {
                   />
                 );
               }
-              if (block.__component === "content.image") {
-                const ib = block as ImageBlock & {
-                  image?: StrapiMedia;
-                  caption?: string;
-                };
+
+              if (block.__component === "content.content-image") {
+                const ib = block as ContentImageBlock;
                 const imgUrl = ib.image?.data?.attributes?.url;
                 if (!imgUrl) return null;
+
                 return (
                   <figure key={idx} className="my-8 text-center">
                     <Image
@@ -100,6 +91,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                   </figure>
                 );
               }
+
               return null;
             })
           ) : (
