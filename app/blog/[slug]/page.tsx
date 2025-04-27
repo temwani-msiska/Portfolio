@@ -3,12 +3,7 @@ import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Image from "next/image";
 import { getPost } from "@/lib/posts";
-import type {
-  Post,
-  TextBlock,
-  ContentImageBlock,
-  StrapiMedia,
-} from "@/types/posts";
+import type { Post, TextBlock, ContentImageBlock } from "@/types/posts";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -17,12 +12,16 @@ interface PageProps {
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
   let post: Post | undefined;
+
   try {
     post = await getPost(slug);
   } catch (err) {
     console.error("getPost error", err);
   }
-  if (!post) return notFound();
+
+  if (!post) {
+    return notFound();
+  }
 
   const blocks = Array.isArray(post.Content) ? post.Content : [];
   const coverUrl = post.CoverImage?.data?.attributes?.url;
@@ -30,8 +29,12 @@ export default async function BlogPostPage({ params }: PageProps) {
   return (
     <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12">
       <Header />
+
       <div className="max-w-3xl mx-auto space-y-6">
+        {/* Title */}
         <h1 className="text-4xl font-bold">{post.Title}</h1>
+
+        {/* Publish Date */}
         {post.PublishDate && (
           <p className="text-yellow-200 text-sm">
             {new Date(post.PublishDate).toLocaleDateString(undefined, {
@@ -42,6 +45,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           </p>
         )}
 
+        {/* Cover Image */}
         {coverUrl && (
           <div className="relative w-full h-96 my-6">
             <Image
@@ -55,9 +59,11 @@ export default async function BlogPostPage({ params }: PageProps) {
           </div>
         )}
 
+        {/* Dynamic Zone Content */}
         <div className="prose prose-invert mt-6 max-w-none">
           {blocks.length > 0 ? (
             blocks.map((block, idx) => {
+              // Text block
               if (block.__component === "content.text-block") {
                 const tb = block as TextBlock;
                 return (
@@ -68,6 +74,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 );
               }
 
+              // ContentImage block
               if (block.__component === "content.content-image") {
                 const ib = block as ContentImageBlock;
                 const imgUrl = ib.image?.data?.attributes?.url;
