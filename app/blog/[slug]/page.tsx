@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Image from "next/image";
 import { getPost } from "@/lib/posts";
-import type { Post, TextBlock, ImageBlock } from "@/types/posts";
+import type { TextBlock, ImageBlock } from "@/types/posts";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
