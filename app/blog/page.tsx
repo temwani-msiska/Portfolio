@@ -15,13 +15,14 @@ export default function BlogPage() {
   useEffect(() => {
     getPosts()
       .then((fetchedPosts) => {
-        console.log("Fetched Posts:", fetchedPosts); // Log all posts after fetching
+        console.log("[Fetched Posts]:", fetchedPosts);
         setPosts(fetchedPosts);
       })
-      .catch((err) => console.error("Error fetching posts:", err));
+      .catch((err) => console.error("[Error fetching posts]:", err));
   }, []);
 
-  const makeExcerpt = (content: Post["Content"], len = 120) => {
+  const makeExcerpt = (content: Post["Content"] | undefined, len = 120) => {
+    if (!content || !Array.isArray(content)) return "No excerpt available"; // ✅ Safety
     const html = content
       .filter((b): b is TextBlock => b.__component === "content.text-block")
       .map((b) => b.body)
@@ -34,7 +35,7 @@ export default function BlogPage() {
     <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12">
       <Header />
 
-      {/* Hero */}
+      {/* Hero Section */}
       <div className="max-w-5xl mx-auto space-y-12">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-2">Blog</h1>
@@ -47,8 +48,8 @@ export default function BlogPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {posts.length ? (
             posts.slice(0, visibleCount).map((post, i) => {
-              console.log(`Rendering Post [${i}]:`, post); // Log each post during map
-              const coverUrl = post.CoverImage?.data?.attributes?.url;
+              console.log(`[Rendering Post ${i}]:`, post);
+              const coverUrl = post.CoverImage?.url; // ✅ Correct: direct access now
 
               return (
                 <motion.div
@@ -59,7 +60,7 @@ export default function BlogPage() {
                 >
                   <Link href={`/blog/${post.Slug}`} legacyBehavior>
                     <a className="group block bg-white/10 border border-white/10 backdrop-blur-md rounded-lg p-4 hover:border-yellow-400 transition-colors space-y-4 overflow-hidden">
-                      {/* Cover */}
+                      {/* Cover Image */}
                       {coverUrl ? (
                         <div className="relative w-full h-48 rounded-lg overflow-hidden">
                           <Image
@@ -67,7 +68,7 @@ export default function BlogPage() {
                             alt={post.Title}
                             fill
                             className="object-cover group-hover:scale-105 transform transition"
-                            sizes="(max-width: 640px) 100vw, 480px"
+                            sizes="(max-width: 640px) 100vw, 480px" // ✅ correct responsive sizes
                             priority={i < 2}
                           />
                         </div>
@@ -77,13 +78,13 @@ export default function BlogPage() {
                         </div>
                       )}
 
-                      {/* Title & Excerpt */}
+                      {/* Title and Excerpt */}
                       <h2 className="text-2xl font-bold group-hover:text-yellow-300 transition-colors">
                         {post.Title}
                       </h2>
                       <p className="text-white/80">{makeExcerpt(post.Content)}</p>
 
-                      {/* Date */}
+                      {/* Publish Date */}
                       {post.PublishDate && (
                         <p className="text-yellow-200 text-sm">
                           {new Date(post.PublishDate).toLocaleDateString(undefined, {
@@ -105,12 +106,12 @@ export default function BlogPage() {
           )}
         </div>
 
-        {/* Load More */}
+        {/* Load More Button */}
         {visibleCount < posts.length && (
           <div className="text-center">
             <button
               onClick={() => {
-                console.log("Load More clicked"); // Log when Load More button is clicked
+                console.log("[Load More Clicked]");
                 setVisibleCount((c) => c + 3);
               }}
               className="mt-8 bg-white/20 hover:bg-yellow-400 text-white font-semibold px-6 py-3 rounded-lg transition"

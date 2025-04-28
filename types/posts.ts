@@ -1,35 +1,34 @@
 // types/posts.ts
 
-/** Rich-text paragraph block */
 export interface TextBlock {
   __component: "content.text-block";
-  body: string; // HTML string
+  id: number;
+  body: string;
 }
 
-/** Strapi v5 “relation to media” shape */
-export interface StrapiMedia {
-  data?: {
-    attributes?: {
-      url: string;
-    };
+export interface ImageBlock {
+  __component: "content.image";
+  id: number;
+  caption?: string | null;
+  image?: {
+    id: number;
+    url: string;
+    formats?: any;
   };
 }
 
-/** Image block: UID must match your component’s actual __component value */
-export interface ImageBlock {
-  __component: "content.image" | "content.content-image";
-  image: StrapiMedia;
-  caption?: string;
-}
-
-export type ContentBlock = TextBlock | ImageBlock;
 
 export interface Post {
   id: number;
+  documentId: string;
   Title: string;
   Slug: string;
-  Content: ContentBlock[];
-  CoverImage?: StrapiMedia;
-  PostStatus: "draft" | "published";
+  PostStatus: string;
   PublishDate: string;
+  Content: Array<TextBlock | ImageBlock>;
+  CoverImage?: {
+    id: number;
+    url: string; 
+    formats?: any;
+  };
 }
