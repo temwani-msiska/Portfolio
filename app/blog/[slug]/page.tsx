@@ -1,61 +1,125 @@
-import { notFound } from 'next/navigation';
-import Image from 'next/image';
+import Header from "@/components/Header";
+import Image from "next/image";
+import { getPost } from "@/lib/posts";
+import type { TextBlock, ImageBlock } from "@/types/posts";
 
-const projects = [
-  {
-    title: 'Temzie Bites',
-    description:
-      'A colourful celebration of Zambian food culture, Temzie Bites features recipes, video diaries, restaurant reviews, and storytelling all rooted in local tradition. Created to showcase the richness of Zambia’s cuisine, from village chicken to chibwabwa, with tech-powered presentation and deep cultural pride.',
-    image: '/images/temziebites.png',
-    slug: 'temzie-bites',
-  },
-  {
-    title: 'DevSprint',
-    description:
-      'AI-powered task manager for developers. Includes automatic sprint planning, time tracking, and GitHub integration.',
-    image: '/images/devsprint.png',
-    slug: 'devsprint',
-  },
-  {
-    title: 'SwiftBudget',
-    description:
-      'A clean personal finance tracker with budget categories, analytics, and savings goals.',
-    image: '/images/swiftbudget.png',
-    slug: 'swiftbudget',
-  },
-  {
-    title: 'SkillBridge',
-    description:
-      'A peer-to-peer learning platform that lets users connect, teach, and grow together.',
-    image: '/images/skillbridge.png',
-    slug: 'skillbridge',
-  },
-  {
-    title: 'HomeQuest',
-    description:
-      'A student rental portal to help students find trusted landlords and verified listings.',
-    image: '/images/homequest.png',
-    slug: 'homequest',
-  },
-];
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
 
-export default function ProjectDetailPage({ params }: { params: { slug: string } }) {
-  const project = projects.find((p) => p.slug === params.slug);
-  if (!project) return notFound();
+export default async function BlogPostPage({ params }: PageProps) {
+  const { slug } = await params; // ✅ MUST await params
+
+  const post = await getPost(slug);
+
+  if (!post) {
+    return (
+      <div className="p-8 bg-red-100 text-red-800">
+        <h1 className="text-2xl font-bold mb-4">❌ Post not found</h1>
+        <p>The requested blog post could not be found.</p>
+      </div>
+    );
+  }
+
+  console.log("[DEBUG] Full post object:", post);
+  console.log("[DEBUG] Post Content array:", post.Content);
 
   return (
-    <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-10">
-      <div className="max-w-4xl mx-auto space-y-8">
-        <h1 className="text-4xl font-bold">{project.title}</h1>
-        <div className="w-full h-64 relative rounded-lg overflow-hidden shadow-lg border border-white/20">
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="object-cover"
-          />
+    <main className="min-h-screen bg-gradient-to-tl from-[#db8805] to-yellow-500 text-white px-6 py-12">
+      <Header />
+
+      <div className="max-w-3xl mx-auto space-y-12">
+        {/* Cover Image */}
+        {post.CoverImage?.url && (
+          <div className="relative w-full h-64 rounded-lg overflow-hidden">
+            <Image
+              src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${post.CoverImage.url}`}
+              alt={post.Title}
+              fill
+              className="object-cover"
+              priority
+              sizes="(max-width: 768px) 100vw, 700px"
+            />
+          </div>
+        )}
+
+        {/* Title */}
+        <h1 className="text-4xl font-bold">{post.Title}</h1>
+
+        {/* Publish Date */}
+        {post.PublishDate && (
+          <p className="text-yellow-100 text-sm">
+            {new Date(post.PublishDate).toLocaleDateString(undefined, {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </p>
+        )}
+
+        {/* Content */}
+        <div className="prose prose-invert prose-lg max-w-none">
+          {post.Content?.map((block, idx) => {
+            console.log(`[DEBUG] Rendering block ${idx}:`, block);
+
+            if (block.__component === "content.text-block") {
+              const textBlock = block as TextBlock;
+              return (
+                <div key={textBlock.id}>
+                  <p>{textBlock.body}</p>
+                </div>
+              );
+            }
+
+            if (block.__component === "content.image") {
+              const imageBlock = block as ImageBlock;
+              console.log(`[DEBUG] Found imageBlock:`, imageBlock);
+
+              const rawImage = imageBlock.image as
+                | { url: string }
+                | { data?: { attributes?: { url: string } } }
+                | undefined;
+
+              let imageUrl = "";
+
+              if (rawImage && "url" in rawImage && rawImage.url) {
+                imageUrl = rawImage.url;
+              } else if (
+                rawImage &&
+                "data" in rawImage &&
+                rawImage.data?.attributes?.url
+              ) {
+                imageUrl = rawImage.data.attributes.url;
+              }
+
+              console.log(`[DEBUG] Resolved image URL:`, imageUrl);
+
+              if (!imageUrl) {
+                console.warn(`[WARNING] No image URL found for block`, imageBlock);
+                return null;
+              }
+
+              return (
+                <div key={imageBlock.id} className="my-6">
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${imageUrl}`}
+                    alt={imageBlock.caption || "Blog image"}
+                    width={800}
+                    height={600}
+                    className="rounded-lg"
+                  />
+                  {imageBlock.caption && (
+                    <p className="text-center text-sm text-white/80 mt-2">
+                      {imageBlock.caption}
+                    </p>
+                  )}
+                </div>
+              );
+            }
+
+            return null;
+          })}
         </div>
-        <p className="text-lg leading-relaxed">{project.description}</p>
       </div>
     </main>
   );
