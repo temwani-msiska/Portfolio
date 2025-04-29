@@ -4,10 +4,10 @@ import ProjectCard from './ProjectCard';
 
 const projects = [
   {
-    title: 'DevSprint',
-    description: 'AI-powered task manager for developers.',
-    image: '/devsprint.png', 
-    slug: 'devsprint',
+    title: 'Temzie Bites',
+    description: 'A colourful celebration of Zambian food culture, with recipes, videos, and culinary storytelling.',
+    image: '../public/bites_new_4.png', 
+    slug: 'temzie-bites',
   },
   {
     title: 'SwiftBudget',
@@ -28,8 +28,6 @@ const projects = [
     slug: 'homequest',
   },
 ];
-
-
 
 export default function ProjectsGrid() {
   return (

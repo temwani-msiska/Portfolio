@@ -8,11 +8,11 @@ const categories = ["All", "Frontend", "AI", "Full Stack"];
 
 const projects = [
   {
-    title: "DevSprint",
-    description: "AI-powered task manager for developers.",
-    image: "/devsprint.png",
-    slug: "devsprint",
-    category: "AI",
+    title: "Temzie Bites",
+    description: "A vibrant digital food diary celebrating Zambian culinary traditions through videos, recipes, and stories.",
+    image: "../../public/bites_new_4.png", 
+    slug: "temzie-bites",
+    category: "Frontend",
   },
   {
     title: "SwiftBudget",
