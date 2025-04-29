@@ -6,6 +6,13 @@ import ProjectCard from "./ProjectCard";
 
 const featuredProjects = [
   {
+    title: "Temzie Bites",
+    description: "A colourful celebration of Zambian food culture.",
+    image: "/bites_new_4.png",
+    slug: "temzie-bites",
+    external: "https://temziebites.com", // ✅ add external link here
+  },
+  {
     title: "DevSprint",
     description: "AI-powered task manager for devs.",
     image: "/devsprint.png",
@@ -29,6 +36,7 @@ export default function FeaturedCarousel() {
       "(min-width: 1024px)": { slides: { perView: 3, spacing: 32 } },
     },
   });
+
   return (
     <div>
       <h2 className="text-2xl font-bold mb-4 text-center">
@@ -41,7 +49,8 @@ export default function FeaturedCarousel() {
               title={project.title}
               description={project.description}
               image={project.image}
-              link={`/projects/${project.slug}`}
+              link={project.external ? project.external : `/projects/${project.slug}`} // ✅ dynamic
+              external={!!project.external} // ✅ true for Temzie Bites
             />
           </div>
         ))}

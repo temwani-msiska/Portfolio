@@ -10,9 +10,10 @@ const projects = [
   {
     title: "Temzie Bites",
     description: "A vibrant digital food diary celebrating Zambian culinary traditions through videos, recipes, and stories.",
-    image: "../../public/bites_new_4.png", 
+    image: "/bites_new_4.png", // ✅ Correct path
     slug: "temzie-bites",
     category: "Frontend",
+    external: "https://temziebites.com", // ✅ External link
   },
   {
     title: "SwiftBudget",
@@ -82,7 +83,8 @@ export default function ProjectsPage() {
               title={project.title}
               description={project.description}
               image={project.image}
-              link={`/projects/${project.slug}`}
+              link={project.external ? project.external : `/projects/${project.slug}`} // ✅ dynamic link
+              external={!!project.external} // ✅ tell it when it's external
             />
           ))}
         </div>

@@ -6,8 +6,9 @@ const projects = [
   {
     title: 'Temzie Bites',
     description: 'A colourful celebration of Zambian food culture, with recipes, videos, and culinary storytelling.',
-    image: '../public/bites_new_4.png', 
+    image: '/bites_new_4.png', // ✅ Corrected path (no ../public/)
     slug: 'temzie-bites',
+    external: 'https://temziebites.com', // ✅ External link
   },
   {
     title: 'SwiftBudget',
@@ -40,7 +41,8 @@ export default function ProjectsGrid() {
             title={project.title}
             description={project.description}
             image={project.image}
-            link={`/projects/${project.slug}`}
+            link={project.external ? project.external : `/projects/${project.slug}`}
+            external={!!project.external} 
           />
         ))}
       </div>
