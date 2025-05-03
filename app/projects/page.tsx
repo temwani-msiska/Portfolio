@@ -10,10 +10,18 @@ const projects = [
   {
     title: "Temzie Bites",
     description: "A vibrant digital food diary celebrating Zambian culinary traditions through videos, recipes, and stories.",
-    image: "/bites_new_4.png", // ✅ Correct path
+    image: "/bites_new_4.png", 
     slug: "temzie-bites",
     category: "Frontend",
-    external: "https://temziebites.com", // ✅ External link
+    external: "https://temziebites.com", 
+  },
+  {
+    title: "Zamlex",
+    description: "A sleek legal service platform for entrepreneurs and investors navigating Zambia’s legal landscape.",
+    image: "/contract.jpg", 
+    slug: "zamlex",
+    category: "Full Stack",
+    external: "https://zamlex.com", 
   },
   {
     title: "SwiftBudget",
