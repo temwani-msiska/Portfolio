@@ -18,7 +18,7 @@ const projects = [
   {
     title: "Zamlex",
     description: "A sleek legal service platform for entrepreneurs and investors navigating Zambia’s legal landscape.",
-    image: "/contract.jpg", 
+    image: "/Contract.jpg", 
     slug: "zamlex",
     category: "Full Stack",
     external: "https://zamlex.com", 
