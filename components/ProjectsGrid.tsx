@@ -6,9 +6,16 @@ const projects = [
   {
     title: 'Temzie Bites',
     description: 'A colourful celebration of Zambian food culture, with recipes, videos, and culinary storytelling.',
-    image: '/bites_new_4.png', // ✅ Corrected path (no ../public/)
+    image: '/bites_new_4.png',
     slug: 'temzie-bites',
-    external: 'https://temziebites.com', // ✅ External link
+    external: 'https://temziebites.com',
+  },
+  {
+    title: 'Zamlex',
+    description: 'A sleek legal service platform for entrepreneurs and investors navigating Zambia’s legal landscape.',
+    image: '/contract.jpg', 
+    slug: 'zamlex',
+    external: 'https://zamlex.com',
   },
   {
     title: 'SwiftBudget',
@@ -29,6 +36,7 @@ const projects = [
     slug: 'homequest',
   },
 ];
+
 
 export default function ProjectsGrid() {
   return (

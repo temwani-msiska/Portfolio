@@ -9,7 +9,7 @@ type ProjectCardProps = {
   description: string;
   image: string;
   link?: string;
-  external?: boolean; // ✅ Add external prop
+  external?: boolean; 
 };
 
 export default function ProjectCard({
