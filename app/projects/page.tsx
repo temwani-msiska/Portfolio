@@ -23,27 +23,6 @@ const projects = [
     category: "Full Stack",
     external: "https://zamlex.com", 
   },
-  {
-    title: "SwiftBudget",
-    description: "Personal finance tracking made simple.",
-    image: "/swiftbudget.png",
-    slug: "swiftbudget",
-    category: "Full Stack",
-  },
-  {
-    title: "SkillBridge",
-    description: "Peer-to-peer learning platform.",
-    image: "/skillbridge.png",
-    slug: "skillbridge",
-    category: "Frontend",
-  },
-  {
-    title: "HomeQuest",
-    description: "Student property rental portal.",
-    image: "/homequest.png",
-    slug: "homequest",
-    category: "Full Stack",
-  },
 ];
 
 export default function ProjectsPage() {

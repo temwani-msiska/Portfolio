@@ -17,24 +17,6 @@ const projects = [
     slug: 'zamlex',
     external: 'https://zamlex.com',
   },
-  {
-    title: 'SwiftBudget',
-    description: 'Personal finance tracking made simple.',
-    image: '/swiftbudget.png',
-    slug: 'swiftbudget',
-  },
-  {
-    title: 'SkillBridge',
-    description: 'Peer-to-peer learning platform.',
-    image: '/skillbridge.png',
-    slug: 'skillbridge',
-  },
-  {
-    title: 'HomeQuest',
-    description: 'Student property rental portal.',
-    image: '/homequest.png',
-    slug: 'homequest',
-  },
 ];
 
 
