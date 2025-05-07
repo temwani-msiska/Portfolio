@@ -4,19 +4,19 @@ export default function CallToAction() {
   return (
     <>
       <Head>
-        <title>Temwani Msiska | Full Stack Developer from Zambia</title>
+        <title>Temwani Msiska | Systems Developer from Zambia</title>
         <meta
           name="description"
-          content="Temwani Msiska is a full stack developer specializing in React, Next.js, Django & Node. Based in Zambia and open to remote work."
+          content="Temwani Msiska is a Systems developer specializing in React, Next.js, Django & Node. Based in Zambia and open to remote work."
         />
         <meta
           name="keywords"
-          content="Temwani Msiska, full stack developer, React, Next.js, Django, Node, Zambia developer, remote developer"
+          content="Temwani Msiska, Systems developer, React, Next.js, Django, Node, Zambia developer, remote developer"
         />
         <meta name="author" content="Temwani Msiska" />
         <meta
           property="og:title"
-          content="Temwani Msiska | Full Stack Developer"
+          content="Temwani Msiska | Systems Developer"
         />
         <meta
           property="og:description"
@@ -28,11 +28,11 @@ export default function CallToAction() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
-          content="Temwani Msiska | Full Stack Developer"
+          content="Temwani Msiska | Systems Developer"
         />
         <meta
           name="twitter:description"
-          content="Experienced full stack developer based in Zambia — available for freelance or remote roles."
+          content="Experienced Systems developer based in Zambia — available for freelance or remote roles."
         />
         <meta name="twitter:image" content="/Profile-Port.jpg" />
         <meta
@@ -52,7 +52,7 @@ export default function CallToAction() {
               name: "Temwani Msiska",
               url: "https://temwanimsiska.dev",
               image: "https://temwanimsiska.dev/Profile-Port.jpg",
-              jobTitle: "Full Stack Developer",
+              jobTitle: "Systems Developer",
               worksFor: {
                 "@type": "Organization",
                 name: "SMART Zambia",

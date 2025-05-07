@@ -22,19 +22,19 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Temwani Msiska | Full Stack Developer from Zambia</title>
+        <title>Temwani Msiska | Systems Developer from Zambia</title>
         <meta
           name="description"
-          content="Temwani Msiska is a full stack developer specializing in React, Next.js, Django & Node. Based in Zambia and open to remote work."
+          content="Temwani Msiska is a Systems developer specializing in React, Next.js, Django & Node. Based in Zambia and open to remote work."
         />
         <meta
           name="keywords"
-          content="Temwani Msiska, full stack developer, React, Next.js, Django, Node, Zambia developer, remote developer"
+          content="Temwani Msiska, Systems developer, React, Next.js, Django, Node, Zambia developer, remote developer"
         />
         <meta name="author" content="Temwani Msiska" />
         <meta
           property="og:title"
-          content="Temwani Msiska | Full Stack Developer"
+          content="Temwani Msiska | Systems Developer"
         />
         <meta
           property="og:description"
@@ -46,11 +46,11 @@ export default function Home() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
-          content="Temwani Msiska | Full Stack Developer"
+          content="Temwani Msiska | Systems Developer"
         />
         <meta
           name="twitter:description"
-          content="Experienced full stack developer based in Zambia — available for freelance or remote roles."
+          content="Experienced Systems developer based in Zambia — available for freelance or remote roles."
         />
         <meta name="twitter:image" content="/Profile-Port.jpg" />
         <meta
@@ -70,7 +70,7 @@ export default function Home() {
               name: "Temwani Msiska",
               url: "https://temwanimsiska.dev",
               image: "https://temwanimsiska.dev/Profile-Port.jpg",
-              jobTitle: "Full Stack Developer",
+              jobTitle: "Systems Developer",
               worksFor: {
                 "@type": "Organization",
                 name: "SMART Zambia",
@@ -129,12 +129,12 @@ export default function Home() {
               Hi, I’m <span className="text-yellow-300">Temwani</span> 👋🏿
             </h1>
             <p className="text-base sm:text-lg md:text-xl mb-4 leading-relaxed text-white font-serif">
-              I’m a full stack developer building clean, scalable applications
+              I’m a Systems developer building clean, scalable applications
               with React, Next.js, Django & Node. Based in Zambia — available
               remotely.
             </p>
             <p className="text-sm italic mb-6 text-yellow-100 font-serif">
-              Currently open for freelance or remote full-time roles.
+              Currently open for freelance or remote roles.
             </p>
 
             <div className="flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-4">

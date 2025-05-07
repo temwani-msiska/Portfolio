@@ -4,7 +4,7 @@ import { useState } from "react";
 import ProjectCard from "@/components/ProjectCard";
 import Header from "@/components/Header";
 
-const categories = ["All", "Frontend", "AI", "Full Stack"];
+const categories = ["All", "Frontend", "AI", "Systems"];
 
 const projects = [
   {
@@ -20,7 +20,7 @@ const projects = [
     description: "A sleek legal service platform for entrepreneurs and investors navigating Zambia’s legal landscape.",
     image: "/ZamlexPreview.png", 
     slug: "zamlex",
-    category: "Full Stack",
+    category: "Systems",
     external: "https://zamlex.com", 
   },
 ];
