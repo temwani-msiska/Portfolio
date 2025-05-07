@@ -14,11 +14,11 @@ export default function AboutPage() {
         <title>Temwani Msiska | Systems Developer from Zambia</title>
         <meta
           name="description"
-          content="Temwani Msiska is a Systems developer specializing in React, Next.js, Django & Node. Based in Zambia and open to remote work."
+          content="Temwani Msiska is a Systems Developer specializing in React, Next.js, Django & Node. Based in Zambia and open to remote work."
         />
         <meta
           name="keywords"
-          content="Temwani Msiska, Systems developer, React, Next.js, Django, Node, Zambia developer, remote developer"
+          content="Temwani Msiska, Systems Developer, React, Next.js, Django, Node, Zambia Developer, remote Developer"
         />
         <meta name="author" content="Temwani Msiska" />
         <meta
@@ -39,7 +39,7 @@ export default function AboutPage() {
         />
         <meta
           name="twitter:description"
-          content="Experienced Systems developer based in Zambia — available for freelance or remote roles."
+          content="Experienced Systems Developer based in Zambia — available for freelance or remote roles."
         />
         <meta name="twitter:image" content="/Profile-Port.jpg" />
         <meta

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     template: "%s | Temwani Msiska",
   },
   description:
-    "Temwani Msiska is a seasoned Systems developer based in Zambia, crafting clean and scalable web and mobile applications using React, Next.js, Django, and Node.js.",
+    "Temwani Msiska is a seasoned Systems Developer based in Zambia, crafting clean and scalable web and mobile applications using React, Next.js, Django, and Node.js.",
   keywords: [
     "Temwani Msiska",
     "Systems Developer",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Temwani Msiska | Systems Developer",
     description:
-      "Experienced Systems developer building modern web and mobile apps with React, Next.js, Django, and Node.",
+      "Experienced Systems Developer building modern web and mobile apps with React, Next.js, Django, and Node.",
     url: "https://temwanimsiska.dev",
     siteName: "Temwani Msiska Portfolio",
     images: [

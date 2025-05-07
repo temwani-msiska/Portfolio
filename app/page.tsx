@@ -25,11 +25,11 @@ export default function Home() {
         <title>Temwani Msiska | Systems Developer from Zambia</title>
         <meta
           name="description"
-          content="Temwani Msiska is a Systems developer specializing in React, Next.js, Django & Node. Based in Zambia and open to remote work."
+          content="Temwani Msiska is a Systems Developer specializing in React, Next.js, Django & Node. Based in Zambia and open to remote work."
         />
         <meta
           name="keywords"
-          content="Temwani Msiska, Systems developer, React, Next.js, Django, Node, Zambia developer, remote developer"
+          content="Temwani Msiska, Systems Developer, React, Next.js, Django, Node, Zambia Developer, remote Developer"
         />
         <meta name="author" content="Temwani Msiska" />
         <meta
@@ -50,7 +50,7 @@ export default function Home() {
         />
         <meta
           name="twitter:description"
-          content="Experienced Systems developer based in Zambia — available for freelance or remote roles."
+          content="Experienced Systems Developer based in Zambia — available for freelance or remote roles."
         />
         <meta name="twitter:image" content="/Profile-Port.jpg" />
         <meta
@@ -129,7 +129,7 @@ export default function Home() {
               Hi, I’m <span className="text-yellow-300">Temwani</span> 👋🏿
             </h1>
             <p className="text-base sm:text-lg md:text-xl mb-4 leading-relaxed text-white font-serif">
-              I’m a Systems developer building clean, scalable applications
+              I’m a Systems Developer building clean, scalable applications
               with React, Next.js, Django & Node. Based in Zambia — available
               remotely.
             </p>
