@@ -3,6 +3,14 @@
 import ProjectCard from './ProjectCard';
 
 const projects = [
+      {
+    title: "Zamlex Ai",
+    description: "ZamLex is Zambia’s first AI-powered legal assistant — built to transform legal work by combining artificial intelligence with local law, helping professionals move faster, work smarter, and serve clients better",
+    image: "/bites_new_4.png",
+    slug: "ZamlexPreview.png",
+    category: "AI",
+    external: "https://ai.zamlex.com/",
+  },
   {
     title: 'Temzie Bites',
     description: 'A colourful celebration of Zambian food culture, with recipes, videos, and culinary storytelling.',
@@ -13,11 +21,19 @@ const projects = [
   {
     title: 'Zamlex',
     description: 'A sleek legal service platform for entrepreneurs and investors navigating Zambia’s legal landscape.',
-    image: '/ZamlexPreview.png', 
+    image: '/ZamlexPreview.png',
     slug: 'zamlex',
     external: 'https://zamlex.com',
   },
+  {
+    title: 'Smart Mechanics Zambia',
+    description: 'A bold portfolio site for a trusted Zambian mechanical company, built with Next.js, Tailwind CSS, and Framer Motion.',
+    image: '/SMZPreview.png', 
+    slug: 'smart-mechanics',
+    external: 'https://smart-mechanics.vercel.app/', 
+  },
 ];
+
 
 
 export default function ProjectsGrid() {

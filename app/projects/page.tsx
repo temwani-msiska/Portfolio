@@ -7,23 +7,40 @@ import Header from "@/components/Header";
 const categories = ["All", "Frontend", "AI", "Systems"];
 
 const projects = [
+    {
+    title: "Zamlex Ai",
+    description: "ZamLex is Zambia’s first AI-powered legal assistant — built to transform legal work by combining artificial intelligence with local law, helping professionals move faster, work smarter, and serve clients better",
+    image: "/ZamlexPreview.png",
+    slug: "Zamlex-ai",
+    category: "AI",
+    external: "https://ai.zamlex.com/",
+  },
   {
     title: "Temzie Bites",
     description: "A vibrant digital food diary celebrating Zambian culinary traditions through videos, recipes, and stories.",
-    image: "/bites_new_4.png", 
+    image: "/bites_new_4.png",
     slug: "temzie-bites",
     category: "Frontend",
-    external: "https://temziebites.com", 
+    external: "https://temziebites.com",
   },
   {
     title: "Zamlex",
-    description: "A sleek legal service platform for entrepreneurs and investors navigating Zambia’s legal landscape.",
-    image: "/ZamlexPreview.png", 
+    description: "Empowering Zambia’s Legal Landscape with Artificial Intelligence Contact Platform.",
+    image: "/ZamlexPreview.png",
     slug: "zamlex",
     category: "Systems",
-    external: "https://zamlex.com", 
+    external: "https://zamlex.com",
+  },
+  {
+    title: "Smart Mechanics Zambia",
+    description: "A high-impact portfolio site for a top Zambian mechanical service provider — built with Next.js, Tailwind, and Framer Motion.",
+    image: "/SMZPreview.png", 
+    slug: "smart-mechanics",
+    category: "Frontend",
+    external: "https://smart-mechanics.vercel.app/", 
   },
 ];
+
 
 export default function ProjectsPage() {
   const [activeCategory, setActiveCategory] = useState("All");
